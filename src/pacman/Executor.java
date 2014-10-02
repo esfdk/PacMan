@@ -47,7 +47,9 @@ public class Executor
 	{
 		Executor exec=new Executor();
 		
-		Controller<MOVE> pmc1 = jmelPacManNNController.newController(true);
+		
+		Controller<MOVE> pmc1 = new jmelPacManNNController();
+//		Controller<MOVE> pmc1 = jmelPacManNNController.newController(true);
 		//		Controller<MOVE> pmc1 = new DataCollectorController(new KeyBoardInput());
 
 		/*

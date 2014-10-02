@@ -30,7 +30,7 @@ public class PacManTrainingData extends TrainingData {
 		case LEFT:
 			output[3] = MAX_VALUE;
 			break;
-		case NEUTRAL:
+		default:
 			output[4] = MAX_VALUE;
 			break;
 		}

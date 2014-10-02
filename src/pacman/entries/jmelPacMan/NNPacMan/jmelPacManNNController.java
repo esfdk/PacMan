@@ -16,7 +16,7 @@ public class jmelPacManNNController extends Controller<MOVE>{
 
 	public NeuralNetwork nn;
 	private int numberOfInputs = 14;
-	private int numberOfOutputs = 5;
+	private int numberOfOutputs = 4;
 	private int numberOfHiddenNodes = 5;
 	
 	/**
@@ -25,7 +25,7 @@ public class jmelPacManNNController extends Controller<MOVE>{
 	public jmelPacManNNController()
 	{
 		nn = NeuralNetwork.createSingleHiddenLayerNeuralNetwork(numberOfInputs, numberOfOutputs, numberOfHiddenNodes);
-//		nn.setWeights(loadWeights());
+		nn.setWeights(loadWeights());
 	}
 	
 	/**
@@ -40,7 +40,7 @@ public class jmelPacManNNController extends Controller<MOVE>{
 		
 		String data = Arrays.toString(controller.nn.getWeights()); 
 		
-		IO.saveFile("trainedNN.txt", data, true);
+		IO.saveFile("trainedNN4.txt", data, true);
 		
 		return controller;
 	}
@@ -107,19 +107,18 @@ public class jmelPacManNNController extends Controller<MOVE>{
 					chosenMove = MOVE.LEFT;
 					break;
 
-				case 4:
+				default:
 					chosenMove = MOVE.NEUTRAL;
 					break;
 				}
 			}
 		}
 		
-//		System.out.println();
-//		double[] results = nn.getOutput();
-//		for(double d : results)
-//			System.out.print(d + " ||| ");
-//		System.out.println();
-//		System.out.println(chosenMove.toString());
+		System.out.println();
+		double[] results = nn.getOutput();
+		for(double d : results)
+			System.out.print(d + " ||| ");
+		System.out.print(chosenMove.toString());
 		
 		return chosenMove;
 	}
@@ -134,8 +133,15 @@ public class jmelPacManNNController extends Controller<MOVE>{
 	
 	private double[] loadWeights()
 	{
-		// TODO: Not yet implemented!
-		double[] weights = {};
+		String s = IO.loadFile("trainedNN3.txt");
+		String ss = s.substring(1, s.length() - 2);
+		String[] weightStrings = ss.split(", "); 
+		double[] weights = new double[weightStrings.length];
+		for(int i = 0; i < weightStrings.length; i++)
+		{
+			weights[i] = Double.parseDouble(weightStrings[i]);
+		}
+		
 		return weights;
 	}
 	

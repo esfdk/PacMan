@@ -1,5 +1,7 @@
 package pacman.entries.jmelPacMan.NN;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import pacman.entries.jmelPacMan.NN.Training.TrainingData;
@@ -39,6 +41,8 @@ public class Backpropagator
 
 	public void train(TrainingSet ts)
 	{
+    	SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+		
 		learningRate = startingLearningRate; // Initialize learning rate
 
 		int epoch = 1; // Current epoch
@@ -79,6 +83,10 @@ public class Backpropagator
 			{
 				learningIteration++;
 				learningRate = startingLearningRate / learningIteration;
+				
+				Calendar cal = Calendar.getInstance();
+		    	cal.getTime();
+		    	System.out.println( sdf.format(cal.getTime()) + " | Current learning rate: " + learningRate + " | Current epoch: " + epoch);
 			}
 
 			if (debugLogging)
@@ -103,6 +111,8 @@ public class Backpropagator
 				&& tc.maxChange > maxWeightChange // or maximum change in weights is less than or equal to threshold
 				&& tc.percentMisclassifiedTuples > maximumMisclassificationPercentage); // or percentage of misclassified tuples
 																						// is below or equal to threshold
+
+		// Print terminating condition values 
 		System.out.println(epochAverageError + " | " + tc.maxChange + " | " + tc.percentMisclassifiedTuples + " | " + epoch);
 	}
 
