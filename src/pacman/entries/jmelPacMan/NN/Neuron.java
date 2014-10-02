@@ -3,12 +3,8 @@ package pacman.entries.jmelPacMan.NN;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
-*/
-public class Neuron {
-
-	private final double ACTIVATION_RESPONSE = 1.0;
-
+public class Neuron
+{
 	/**
 	 * The number of inputs the neuron takes.
 	 */
@@ -26,59 +22,69 @@ public class Neuron {
 	private double weightedSum;
 	private double error;
 
-	public Neuron() {
+	public Neuron()
+	{
 		inputs = new ArrayList<Synapse>();
 		numberOfInputs = 0;
 	}
 
-	public void addInput(Synapse s) {
+	public void addInput(Synapse s)
+	{
 		inputs.add(s);
 		numberOfInputs++;
 	}
 
-	private void calculateWeightedSum() {
+	private void calculateWeightedSum()
+	{
 		weightedSum = 0;
-		for (Synapse synapse : inputs) {
-			weightedSum += synapse.getWeight()
-					* synapse.getSourceNeuron().getOutput();
+		for (Synapse synapse : inputs)
+		{
+			weightedSum += synapse.getWeight() * synapse.getSourceNeuron().getOutput();
 		}
 	}
 
-	public void activate() {
+	public void activate()
+	{
 		calculateWeightedSum();
-		output = Helper.Sigmoid(weightedSum, ACTIVATION_RESPONSE);
+		output = Helper.Sigmoid(weightedSum);
 	}
 
-	public double getOutput() {
+	public double getOutput()
+	{
 		return this.output;
 	}
 
-	public void setOutput(double output) {
+	public void setOutput(double output)
+	{
 		this.output = output;
 	}
-	
-	public double getError() {
+
+	public double getError()
+	{
 		return error;
 	}
 
-	public void setError(double error) {
+	public void setError(double error)
+	{
 		this.error = error;
 	}
-	
 
-    public List<Synapse> getInputs() {
-        return this.inputs;
-    }
+	public List<Synapse> getInputs()
+	{
+		return this.inputs;
+	}
 
-    public double[] getWeights() {
-        double[] weights = new double[inputs.size()];
+	public double[] getWeights()
+	{
+		double[] weights = new double[inputs.size()];
 
-        int i = 0;
-        for(Synapse synapse : inputs) {
-            weights[i] = synapse.getWeight();
-            i++;
-        }
+		int i = 0;
+		for (Synapse synapse : inputs)
+		{
+			weights[i] = synapse.getWeight();
+			i++;
+		}
 
-        return weights;
-    }
+		return weights;
+	}
 }

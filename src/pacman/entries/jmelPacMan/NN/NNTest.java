@@ -1,81 +1,138 @@
 package pacman.entries.jmelPacMan.NN;
 
+import java.util.Arrays;
+
 import pacman.entries.jmelPacMan.NN.Training.TrainingData;
 import pacman.entries.jmelPacMan.NN.Training.TrainingSet;
 
 public class NNTest
 {
 	public static NeuralNetwork nn;
-	
-	/**
-	 * @param args
-	 */
+
 	public static void main(String[] args)
 	{
-		classificationByBackpropagationTest();
+		System.out.println("=====");
+		AND();
+		System.out.println("=====");
+		XOR();
+		System.out.println("=====");
 	}
 
-	/**
-	 * Runs the test from "Classification by Backpropagation" 
-	 * Example 9.1 in section 9.2.3.
-	 */
-	private static void classificationByBackpropagationTest()
+	private static void AND()
 	{
-		// Initialize nn
+		int numberOfInputs = 2;
+		int numberOfOutputs = 1;
 		nn = new NeuralNetwork();
-		
 		Neuron bias = new Neuron();
 		bias.setOutput(1.0);
-
-		// Input neurons
-		Neuron x1 = new Neuron();
-		x1.setOutput(1.0);
-		
-		Neuron x2 = new Neuron();
-		x2.setOutput(0.0);
-		
-		Neuron x3 = new Neuron();
-		x3.setOutput(1.0);
-		
-		// Input layer
-		NeuronLayer inputLayer = new NeuronLayer(bias);
-		inputLayer.addNeuron(x1);
-		inputLayer.addNeuron(x2);
-		inputLayer.addNeuron(x3);
-		
-		// Hidden neurons
-		Neuron h1 = new Neuron();
-		double[] h1weights = {-0.4, 0.2, 0.4, -0.5};
-		
-		Neuron h2 = new Neuron();
-		double[] h2weights = {0.2, -0.3, 0.1, 0.2};
-		
-		// Hidden layer
-		NeuronLayer hLayer = new NeuronLayer(inputLayer, bias);
-		hLayer.addNeuron(h1, h1weights);
-		hLayer.addNeuron(h2, h2weights);
-		
-		// Output neuron
+		Neuron i1 = new Neuron();
+		Neuron i2 = new Neuron();
 		Neuron o1 = new Neuron();
-		double[] o1weights = {0.1, -0.3, -0.2};
-		
-		// Output layer
-		NeuronLayer outputLayer = new NeuronLayer (hLayer);
-		outputLayer.addNeuron(o1, o1weights);
-		
+		NeuronLayer inputLayer = new NeuronLayer(bias);
+		inputLayer.addNeuron(i1);
+		inputLayer.addNeuron(i2);
+		NeuronLayer outputLayer = new NeuronLayer(inputLayer);
+		outputLayer.addNeuron(o1);
 		nn.addLayer(inputLayer);
-		nn.addLayer(hLayer);
 		nn.addLayer(outputLayer);
-		
 		nn.feedForward();
-		
+		double[] in1 = { 0, 0 };
+		double[] in2 = { 0, 1 };
+		double[] in3 = { 1, 0 };
+		double[] in4 = { 1, 1 };
+		double[] out1 = { 1 };
+		double[] out2 = { 0 };
 		TrainingSet ts = new TrainingSet();
-		TrainingData td = new TrainingData(3, 1);
-		double[] in = {1, 0, 1};
-		double[] out = {1};
-		td.setData(in, out);
-		ts.AddTrainingData(td);
-		
-		Backpropagator b = new Backpropagator(nn, 0.9, ts, 0);
+		TrainingData td1 = new TrainingData(2, 1);
+		td1.setData(in1, out2);
+		TrainingData td2 = new TrainingData(2, 1);
+		td2.setData(in2, out2);
+		TrainingData td3 = new TrainingData(2, 1);
+		td3.setData(in3, out2);
+		TrainingData td4 = new TrainingData(2, 1);
+		td4.setData(in4, out1);
+		ts.AddTrainingData(td1);
+		ts.AddTrainingData(td2);
+		ts.AddTrainingData(td3);
+		ts.AddTrainingData(td4);
+		Backpropagator bp = new Backpropagator(nn);
+		bp.train(ts);
+		nn.setInputs(in1);
+		nn.feedForward();
+		double result = nn.getOutput()[0];
+		System.out.println("AND (0, 0) = " + result);
+		nn.setInputs(in2);
+		nn.feedForward();
+		result = nn.getOutput()[0];
+		System.out.println("AND (1, 0) = " + result);
+		nn.setInputs(in3);
+		nn.feedForward();
+		result = nn.getOutput()[0];
+		System.out.println("AND (0, 1) = " + result);
+		nn.setInputs(in4);
+		nn.feedForward();
+		result = nn.getOutput()[0];
+		System.out.println("AND (1, 1) = " + result);
+	}
+
+	private static void XOR()
+	{
+		nn = new NeuralNetwork();
+		Neuron bias = new Neuron();
+		bias.setOutput(1.0);
+		Neuron i1 = new Neuron();
+		Neuron i2 = new Neuron();
+		Neuron h1 = new Neuron();
+		Neuron h2 = new Neuron();
+		Neuron o1 = new Neuron();
+		NeuronLayer inputLayer = new NeuronLayer(bias);
+		inputLayer.addNeuron(i1);
+		inputLayer.addNeuron(i2);
+		NeuronLayer h1Layer = new NeuronLayer(inputLayer, bias);
+		h1Layer.addNeuron(h1);
+		h1Layer.addNeuron(h2);
+		NeuronLayer outputLayer = new NeuronLayer(h1Layer);
+		outputLayer.addNeuron(o1);
+		nn.addLayer(inputLayer);
+		nn.addLayer(h1Layer);
+		nn.addLayer(outputLayer);
+		nn.feedForward();
+		double[] in1 = { 0, 0 };
+		double[] in2 = { 0, 1 };
+		double[] in3 = { 1, 0 };
+		double[] in4 = { 1, 1 };
+		double[] out1 = { 1 };
+		double[] out2 =	{ 0 };
+		TrainingSet ts = new TrainingSet();
+		TrainingData td1 = new TrainingData(2, 1);
+		td1.setData(in1, out2);
+		TrainingData td2 = new TrainingData(2, 1);
+		td2.setData(in2, out1);
+		TrainingData td3 = new TrainingData(2, 1);
+		td3.setData(in3, out1);
+		TrainingData td4 = new TrainingData(2, 1);
+		td4.setData(in4, out2);
+		ts.AddTrainingData(td1);
+		ts.AddTrainingData(td2);
+		ts.AddTrainingData(td3);
+		ts.AddTrainingData(td4);
+		Backpropagator bp = new Backpropagator(nn);
+		bp.train(ts);
+		nn.setInputs(in1);
+		nn.feedForward();
+		double result = nn.getOutput()[0];
+		System.out.println("XOR (0, 0) = " + result);
+		nn.setInputs(in2);
+		nn.feedForward();
+		result = nn.getOutput()[0];
+		System.out.println("XOR (1, 0) = " + result);
+		nn.setInputs(in3);
+		nn.feedForward();
+		result = nn.getOutput()[0];
+		System.out.println("XOR (0, 1) = " + result);
+		nn.setInputs(in4);
+		nn.feedForward();
+		result = nn.getOutput()[0];
+		System.out.println("XOR (1, 1) = " + result);
 	}
 }

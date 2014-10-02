@@ -1,10 +1,8 @@
 package dataRecording;
 
 import pacman.controllers.*;
-import pacman.game.Constants.DM;
-import pacman.game.Constants.GHOST;
+import pacman.game.Constants.*;
 import pacman.game.Game;
-import pacman.game.Constants.MOVE;
 
 /**
  * The DataCollectorHumanController class is used to collect training data from playing PacMan.

@@ -24,6 +24,7 @@ import pacman.controllers.examples.RandomNonRevPacMan;
 import pacman.controllers.examples.RandomPacMan;
 import pacman.controllers.examples.StarterGhosts;
 import pacman.controllers.examples.StarterPacMan;
+import pacman.entries.jmelPacMan.NNPacMan.jmelPacManNNController;
 import pacman.game.Game;
 import pacman.game.GameView;
 import static pacman.game.Constants.*;
@@ -46,7 +47,8 @@ public class Executor
 	{
 		Executor exec=new Executor();
 		
-		Controller<MOVE> pmc1 = new DataCollectorController(new KeyBoardInput());
+		Controller<MOVE> pmc1 = jmelPacManNNController.newController(true);
+		//		Controller<MOVE> pmc1 = new DataCollectorController(new KeyBoardInput());
 
 		/*
 		//run multiple games in batch mode - good for testing.

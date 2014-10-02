@@ -9,11 +9,49 @@ public class NeuralNetwork {
 	private NeuronLayer input;
 	private NeuronLayer output;
 
-	public NeuralNetwork() {
+	public NeuralNetwork() 
+	{
 		layers = new ArrayList<NeuronLayer>();
 	}
+	
+	public static NeuralNetwork createSingleHiddenLayerNeuralNetwork(int numberOfInputNodes, int numberOfOutputNodes, int numberOfHiddenNodes)
+	{
+		NeuralNetwork nn = new NeuralNetwork();
+		
+		Neuron bias = new Neuron();
+		bias.setOutput(1.0);
+		
+		// Create input layer
+		NeuronLayer inputLayer = new NeuronLayer(bias);
+		for (int i = 0; i < numberOfInputNodes; i++)
+		{
+			inputLayer.addNeuron(new Neuron());
+		}
+		
+		// Create hidden layer
+		NeuronLayer hiddenLayer = new NeuronLayer(inputLayer, bias);
+		for (int i = 0; i < numberOfHiddenNodes; i++)
+		{
+			hiddenLayer.addNeuron(new Neuron());
+		}
+		
+		// Create output layer
+		NeuronLayer outputLayer = new NeuronLayer(hiddenLayer);
+		for (int i = 0; i < numberOfOutputNodes; i++)
+		{
+			outputLayer.addNeuron(new Neuron());
+		}
+		
+		// Add layers to network
+		nn.addLayer(inputLayer);
+		nn.addLayer(hiddenLayer);
+		nn.addLayer(outputLayer);
+		
+		return nn;
+	}
 
-	public void addLayer(NeuronLayer layer) {
+	public void addLayer(NeuronLayer layer) 
+	{
 		layers.add(layer);
 
 		if (layers.size() == 1) {
@@ -154,7 +192,23 @@ public class NeuralNetwork {
 
 		return copy;
 	}
+	
+	public void setWeights(double[] weights)
+	{
+		int w = 0;
+		
+		for (NeuronLayer layer : layers) {
 
+			for (Neuron neuron : layer.getNeurons()) {
+
+				for (Synapse synapse : neuron.getInputs()) {
+					synapse.setWeight(weights[w]);
+					w++;
+				}
+			}
+		}
+	}
+	
 	public void copyWeightsFrom(NeuralNetwork sourceNeuralNetwork) {
 		if (layers.size() != sourceNeuralNetwork.layers.size()) {
 			throw new IllegalArgumentException(
