@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import pacman.entries.jmelPacMan.NN.Training.TrainingData;
 import pacman.entries.jmelPacMan.NN.Training.TrainingSet;
+import pacman.entries.jmelPacMan.NNPacMan.jmelPacManNNController;
 
 public class NNTest
 {
@@ -11,11 +12,13 @@ public class NNTest
 
 	public static void main(String[] args)
 	{
-		System.out.println("=====");
-		AND();
-		System.out.println("=====");
-		XOR();
-		System.out.println("=====");
+//		System.out.println("=====");
+//		AND();
+//		System.out.println("=====");
+//		XOR();
+//		System.out.println("=====");
+		
+		jmelPacManNNController.newController(true);
 	}
 
 	private static void AND()
