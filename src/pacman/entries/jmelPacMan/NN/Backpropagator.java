@@ -9,7 +9,6 @@ import pacman.entries.jmelPacMan.NN.Training.TrainingSet;
 
 public class Backpropagator
 {
-
 	private boolean debugLogging = false; // Controls prints to console
 
 	private NeuralNetwork neuralNetwork; // Neural network to train
@@ -18,8 +17,9 @@ public class Backpropagator
 	private double startingLearningRate = 1.0; // Starting learning rate for the backpropagation algorithm
 	private double errorThreshold = 0.05; // Learning stops after average error is below this value.
 	private int maximumEpochs = 100000; // Maximum number of epochs to train on.
-	private int epochsPerIteration = maximumEpochs >= 400 ? maximumEpochs/400 : 10; // Amount of epochs per learning iteration.
-	private double maxWeightChange = 0.000001; // Maximum amount of change in a single weight in the neural network during training.
+	private int epochsPerIteration = maximumEpochs >= 400 ? maximumEpochs / 400 : 10; // Amount of epochs per learning iteration.
+	private double maxWeightChange = 0.000001; // Maximum amount of change in a single weight in the neural network during
+												// training.
 	private double maximumMisclassificationPercentage = 0.05; // Maximum amount of misclassified tuples allowed in an epoch.
 
 	public Backpropagator(NeuralNetwork nn)
@@ -41,8 +41,8 @@ public class Backpropagator
 
 	public void train(TrainingSet ts)
 	{
-    	SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-		
+		// SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+
 		learningRate = startingLearningRate; // Initialize learning rate
 
 		int epoch = 1; // Current epoch
@@ -83,10 +83,11 @@ public class Backpropagator
 			{
 				learningIteration++;
 				learningRate = startingLearningRate / learningIteration;
-				
-				Calendar cal = Calendar.getInstance();
-		    	cal.getTime();
-		    	System.out.println( sdf.format(cal.getTime()) + " | Current learning rate: " + learningRate + " | Current epoch: " + epoch);
+
+				// Calendar cal = Calendar.getInstance();
+				// cal.getTime();
+				// System.out.println( sdf.format(cal.getTime()) + " | Current learning rate: " + learningRate +
+				// " | Current epoch: " + epoch);
 			}
 
 			if (debugLogging)
@@ -112,8 +113,9 @@ public class Backpropagator
 				&& tc.percentMisclassifiedTuples > maximumMisclassificationPercentage); // or percentage of misclassified tuples
 																						// is below or equal to threshold
 
-		// Print terminating condition values 
-		System.out.println(epochAverageError + " | " + tc.maxChange + " | " + tc.percentMisclassifiedTuples + " | " + epoch);
+		// Print terminating condition values
+		if (debugLogging)
+			System.out.println(epochAverageError + " | " + tc.maxChange + " | " + tc.percentMisclassifiedTuples + " | " + epoch);
 	}
 
 	private TerminatingConditions backpropagate(TrainingSet ts)
@@ -231,7 +233,8 @@ public class Backpropagator
 
 			double[] output = neuralNetwork.getOutput();
 			error += sumError(output, td.getOutput());
-			if(misclassified) misclassifiedTuples++;
+			if (misclassified)
+				misclassifiedTuples++;
 		}
 
 		TerminatingConditions tc = new TerminatingConditions();

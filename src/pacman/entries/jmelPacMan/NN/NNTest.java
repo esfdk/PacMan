@@ -1,7 +1,5 @@
 package pacman.entries.jmelPacMan.NN;
 
-import java.util.Arrays;
-
 import pacman.entries.jmelPacMan.NN.Training.TrainingData;
 import pacman.entries.jmelPacMan.NN.Training.TrainingSet;
 import pacman.entries.jmelPacMan.NNPacMan.jmelPacManNNController;
@@ -18,14 +16,21 @@ public class NNTest
 //		XOR();
 //		System.out.println("=====");
 		
-		jmelPacManNNController.newController(true);
+		
+		for(int i = 2; i <= 10; i++)
+		{
+			for(int j = 0; j < 10; j++)
+			{
+				jmelPacManNNController.newController(true, i);
+			}
+		}
 	}
 
 	private static void AND()
 	{
 		int numberOfInputs = 2;
 		int numberOfOutputs = 1;
-		nn = new NeuralNetwork();
+		nn = new NeuralNetwork("AND");
 		Neuron bias = new Neuron();
 		bias.setOutput(1.0);
 		Neuron i1 = new Neuron();
@@ -80,7 +85,7 @@ public class NNTest
 
 	private static void XOR()
 	{
-		nn = new NeuralNetwork();
+		nn = new NeuralNetwork("XOR");
 		Neuron bias = new Neuron();
 		bias.setOutput(1.0);
 		Neuron i1 = new Neuron();
