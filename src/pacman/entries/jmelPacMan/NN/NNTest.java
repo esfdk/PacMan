@@ -17,19 +17,18 @@ public class NNTest
 //		System.out.println("=====");
 		
 		
-		for(int i = 2; i <= 10; i++)
+		for(int i = 5; i <= 5; i++)
 		{
-			for(int j = 0; j < 10; j++)
+			for(int j = 0; j < 3; j++)
 			{
-				jmelPacManNNController.newController(true, i);
+				jmelPacManNNController.newController(i);
 			}
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private static void AND()
 	{
-		int numberOfInputs = 2;
-		int numberOfOutputs = 1;
 		nn = new NeuralNetwork("AND");
 		Neuron bias = new Neuron();
 		bias.setOutput(1.0);
@@ -83,6 +82,7 @@ public class NNTest
 		System.out.println("AND (1, 1) = " + result);
 	}
 
+	@SuppressWarnings("unused")
 	private static void XOR()
 	{
 		nn = new NeuralNetwork("XOR");

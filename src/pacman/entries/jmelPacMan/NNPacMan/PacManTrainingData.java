@@ -4,11 +4,11 @@ import pacman.entries.jmelPacMan.NN.Training.TrainingData;
 import pacman.game.Constants.MOVE;
 import dataRecording.DataTuple;
 
-public class PacManTrainingData extends TrainingData {
-	
+public class PacManTrainingData extends TrainingData
+{
 	private static final double MIN_VALUE = 0.05;
 	private static final double MAX_VALUE = 0.95;
-	
+
 	public PacManTrainingData(DataTuple dt, int inputNodes, int outputNodes)
 	{
 		super(inputNodes, outputNodes);
@@ -35,32 +35,37 @@ public class PacManTrainingData extends TrainingData {
 			break;
 		}
 		
-		// input[0] = dt.normalizeLevel(dt.mazeIndex);
-		// input[1] = dt.normalizeLevel(dt.currentLevel);
-		input[0] = dt.normalizePosition(dt.pacmanPosition);
-		// input[3] = dt.pacmanLivesLeft;
-		// input[4] = dt.normalizeCurrentScore(dt.currentScore);
-		// input[5] = dt.normalizeTotalGameTime(dt.totalGameTime);
-		// input[6] = dt.normalizeCurrentLevelTime(dt.currentLevelTime);
-		input[1] = dt.normalizeNumberOfPills(dt.numOfPillsLeft);
-		input[2] = dt.normalizeNumberOfPowerPills(dt.numOfPowerPillsLeft);
-		// Ghosts edible?
-		input[3] = dt.normalizeBoolean(dt.isBlinkyEdible);
-		input[4] = dt.normalizeBoolean(dt.isInkyEdible);
-		input[5] = dt.normalizeBoolean(dt.isPinkyEdible);
-		input[6] = dt.normalizeBoolean(dt.isSueEdible);
-		// Ghost distance
-		input[7] = dt.normalizeDistance(dt.blinkyDist);
-		input[8] = dt.normalizeDistance(dt.inkyDist);
-		input[9] = dt.normalizeDistance(dt.pinkyDist);
-		input[10] = dt.normalizeDistance(dt.sueDist);
-		// Ghost direction
-		input[10] = moveToDouble(dt.blinkyDir);
-		input[11] = moveToDouble(dt.inkyDir);
-		input[12] = moveToDouble(dt.pinkyDir);
-		input[13] = moveToDouble(dt.sueDir);
+		fillInputArrayFromDataTuple(input, dt);
 	}
 
+	public static void fillInputArrayFromDataTuple(double[] input, DataTuple dt)
+	{
+		input[0] = dt.normalizeLevel(dt.mazeIndex);
+		input[1] = dt.normalizeLevel(dt.currentLevel);
+		input[2] = dt.normalizePosition(dt.pacmanPosition);
+//		input[3] = dt.pacmanLivesLeft;
+		input[3] = dt.normalizeCurrentScore(dt.currentScore);
+		input[4] = dt.normalizeTotalGameTime(dt.totalGameTime);
+		input[5] = dt.normalizeCurrentLevelTime(dt.currentLevelTime);
+		input[6] = dt.normalizeNumberOfPills(dt.numOfPillsLeft);
+		input[7] = dt.normalizeNumberOfPowerPills(dt.numOfPowerPillsLeft);
+		// Ghosts edible?
+		input[8] = dt.normalizeBoolean(dt.isBlinkyEdible);
+		input[9] = dt.normalizeBoolean(dt.isInkyEdible);
+		input[10] = dt.normalizeBoolean(dt.isPinkyEdible);
+		input[11] = dt.normalizeBoolean(dt.isSueEdible);
+		// Ghost distance
+		input[12] = dt.normalizeDistance(dt.blinkyDist);
+		input[13] = dt.normalizeDistance(dt.inkyDist);
+		input[14] = dt.normalizeDistance(dt.pinkyDist);
+		input[15] = dt.normalizeDistance(dt.sueDist);
+		// Ghost direction
+		input[16] = moveToDouble(dt.blinkyDir);
+		input[17] = moveToDouble(dt.inkyDir);
+		input[18] = moveToDouble(dt.pinkyDir);
+		input[19] = moveToDouble(dt.sueDir);
+	}
+	
 	public static double moveToDouble(MOVE move)
 	{
 		switch (move)
