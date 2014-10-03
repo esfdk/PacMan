@@ -182,7 +182,7 @@ public class jmelPacManNNController extends Controller<MOVE>
 
 	private double[] loadWeights()
 	{
-		String s = IO.loadFile("trainedNN3.txt");
+		String s = IO.loadFile("TrainedNN-2014_10_03_19_55_46_836-4.txt");
 		String ss = s.substring(1, s.length() - 2);
 		String[] weightStrings = ss.split(", ");
 		double[] weights = new double[weightStrings.length];

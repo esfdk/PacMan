@@ -18,7 +18,7 @@ public class Backpropagator
 	private double errorThreshold = 0.05; // Learning stops after average error is below this value.
 	private int maximumEpochs = 100000; // Maximum number of epochs to train on.
 	private int epochsPerIteration = maximumEpochs >= 400 ? maximumEpochs / 400 : 10; // Amount of epochs per learning iteration.
-	private double maxWeightChange = 0.000001; // Maximum amount of change in a single weight in the neural network during
+	private double maxWeightChange = 0.00001; // Maximum amount of change in a single weight in the neural network during
 												// training.
 	private double maximumMisclassificationPercentage = 0.05; // Maximum amount of misclassified tuples allowed in an epoch.
 
@@ -41,7 +41,7 @@ public class Backpropagator
 
 	public void train(TrainingSet ts)
 	{
-		// SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+//		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 
 		learningRate = startingLearningRate; // Initialize learning rate
 
@@ -106,6 +106,14 @@ public class Backpropagator
 							.println("Woop, average (" + epochAverageError + ") is lower than error after " + epoch + " epochs");
 				}
 			}
+
+//			if (epoch % 100 == 0)
+//			{
+//				Calendar cal = Calendar.getInstance();
+//				cal.getTime();
+//				System.out.println(sdf.format(cal.getTime()) + " | Current learning rate: " + learningRate + " | Current epoch: "
+//						+ epoch);
+//			}
 
 		} while (epoch < maximumEpochs // Continue training until maximum epochs have passed
 				&& epochAverageError > errorThreshold // or average error is less than or equal to error threshold
