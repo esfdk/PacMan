@@ -41,7 +41,7 @@ public class Backpropagator
 
 	public void train(TrainingSet ts)
 	{
-		// SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 
 		learningRate = startingLearningRate; // Initialize learning rate
 
@@ -105,6 +105,14 @@ public class Backpropagator
 					System.out
 							.println("Woop, average (" + epochAverageError + ") is lower than error after " + epoch + " epochs");
 				}
+			}
+
+			if (epoch % 100 == 0)
+			{
+				Calendar cal = Calendar.getInstance();
+				cal.getTime();
+				System.out.println(sdf.format(cal.getTime()) + " | Current learning rate: " + learningRate + " | Current epoch: "
+						+ epoch);
 			}
 
 		} while (epoch < maximumEpochs // Continue training until maximum epochs have passed

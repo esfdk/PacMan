@@ -21,7 +21,7 @@ public class jmelPacManNNController extends Controller<MOVE>
 	private String fileToLoad = "TrainedNN-2014_10_03_21_15_20_700-5.txt";
 
 	public NeuralNetwork nn;
-	private int numberOfInputs = 20;
+	private int numberOfInputs = 32;
 	private int numberOfOutputs = 4;
 	private int numberOfHiddenNodes = 5;
 

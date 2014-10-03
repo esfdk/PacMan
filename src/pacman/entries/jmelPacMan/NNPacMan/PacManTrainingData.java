@@ -6,8 +6,8 @@ import dataRecording.DataTuple;
 
 public class PacManTrainingData extends TrainingData
 {
-	private static final double MIN_VALUE = 0.05;
-	private static final double MAX_VALUE = 0.95;
+	private static final double MIN_VALUE = 0.0;
+	private static final double MAX_VALUE = 1.0;
 
 	public PacManTrainingData(DataTuple dt, int inputNodes, int outputNodes)
 	{
@@ -61,9 +61,78 @@ public class PacManTrainingData extends TrainingData
 		input[15] = dt.normalizeDistance(dt.sueDist);
 		// Ghost direction
 		input[16] = moveToDouble(dt.blinkyDir);
-		input[17] = moveToDouble(dt.inkyDir);
-		input[18] = moveToDouble(dt.pinkyDir);
-		input[19] = moveToDouble(dt.sueDir);
+
+		for(int ghostDirectionInputs = 16; ghostDirectionInputs <= 31; ghostDirectionInputs++)
+		{
+			input[ghostDirectionInputs] = 0.0;
+		}
+
+		switch (dt.blinkyDir)
+		{
+				case UP:
+					input[16] = MAX_VALUE;
+					break;
+				case RIGHT:
+					input[17] = MAX_VALUE;
+					break;
+				case DOWN:
+					input[18] = MAX_VALUE;
+					break;
+				case LEFT:
+					input[19] = MAX_VALUE;
+					break;
+				default:
+					break;
+		}
+		switch (dt.inkyDir)
+		{
+				case UP:
+					input[20] = MAX_VALUE;
+					break;
+				case RIGHT:
+					input[21] = MAX_VALUE;
+					break;
+				case DOWN:
+					input[22] = MAX_VALUE;
+					break;
+				case LEFT:
+					input[23] = MAX_VALUE;
+					break;
+				default:
+					break;
+		}switch (dt.pinkyDir)
+		{
+				case UP:
+					input[24] = MAX_VALUE;
+					break;
+				case RIGHT:
+					input[25] = MAX_VALUE;
+					break;
+				case DOWN:
+					input[26] = MAX_VALUE;
+					break;
+				case LEFT:
+					input[27] = MAX_VALUE;
+					break;
+				default:
+					break;
+		}switch (dt.sueDir)
+		{
+				case UP:
+					input[28] = MAX_VALUE;
+					break;
+				case RIGHT:
+					input[29] = MAX_VALUE;
+					break;
+				case DOWN:
+					input[30] = MAX_VALUE;
+					break;
+				case LEFT:
+					input[31] = MAX_VALUE;
+					break;
+				default:
+					break;
+		}
 	}
 	
 	public static double moveToDouble(MOVE move)

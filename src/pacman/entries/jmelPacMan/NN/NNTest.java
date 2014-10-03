@@ -16,10 +16,9 @@ public class NNTest
 //		XOR();
 //		System.out.println("=====");
 		
-		
 		for(int i = 5; i <= 5; i++)
 		{
-			for(int j = 0; j < 3; j++)
+			for(int j = 0; j < 1; j++)
 			{
 				jmelPacManNNController.newController(i);
 			}
