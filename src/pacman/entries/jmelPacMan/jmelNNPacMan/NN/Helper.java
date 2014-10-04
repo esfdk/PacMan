@@ -1,4 +1,4 @@
-package pacman.entries.jmelPacMan.NN;
+package pacman.entries.jmelPacMan.jmelNNPacMan.NN;
 
 /**
  * Helper class containing static functions used in the Neural Network.

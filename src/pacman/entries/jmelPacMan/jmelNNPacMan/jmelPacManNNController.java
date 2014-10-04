@@ -1,4 +1,4 @@
-package pacman.entries.jmelPacMan.NNPacMan;
+package pacman.entries.jmelPacMan.jmelNNPacMan;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -7,9 +7,9 @@ import java.util.Calendar;
 import dataRecording.DataSaverLoader;
 import dataRecording.DataTuple;
 import pacman.controllers.Controller;
-import pacman.entries.jmelPacMan.NN.Backpropagator;
-import pacman.entries.jmelPacMan.NN.NeuralNetwork;
-import pacman.entries.jmelPacMan.NN.Training.TrainingSet;
+import pacman.entries.jmelPacMan.jmelNNPacMan.NN.Backpropagator;
+import pacman.entries.jmelPacMan.jmelNNPacMan.NN.NeuralNetwork;
+import pacman.entries.jmelPacMan.jmelNNPacMan.NN.Training.TrainingSet;
 import pacman.game.Constants.MOVE;
 import pacman.game.Game;
 import pacman.game.util.IO;

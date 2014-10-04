@@ -1,4 +1,4 @@
-package pacman.entries.jmelPacMan.NN;
+package pacman.entries.jmelPacMan.jmelNNPacMan.NN;
 
 import java.util.ArrayList;
 import java.util.List;

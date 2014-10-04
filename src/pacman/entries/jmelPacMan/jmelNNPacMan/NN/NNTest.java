@@ -1,8 +1,8 @@
-package pacman.entries.jmelPacMan.NN;
+package pacman.entries.jmelPacMan.jmelNNPacMan.NN;
 
-import pacman.entries.jmelPacMan.NN.Training.TrainingData;
-import pacman.entries.jmelPacMan.NN.Training.TrainingSet;
-import pacman.entries.jmelPacMan.NNPacMan.jmelPacManNNController;
+import pacman.entries.jmelPacMan.jmelNNPacMan.jmelPacManNNController;
+import pacman.entries.jmelPacMan.jmelNNPacMan.NN.Training.TrainingData;
+import pacman.entries.jmelPacMan.jmelNNPacMan.NN.Training.TrainingSet;
 
 public class NNTest
 {

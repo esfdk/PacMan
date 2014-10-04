@@ -1,6 +1,6 @@
-package pacman.entries.jmelPacMan.NNPacMan;
+package pacman.entries.jmelPacMan.jmelNNPacMan;
 
-import pacman.entries.jmelPacMan.NN.Training.TrainingData;
+import pacman.entries.jmelPacMan.jmelNNPacMan.NN.Training.TrainingData;
 import pacman.game.Constants.MOVE;
 import dataRecording.DataTuple;
 

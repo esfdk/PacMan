@@ -1,4 +1,4 @@
-package pacman.entries.jmelPacMan.NN.Training;
+package pacman.entries.jmelPacMan.jmelNNPacMan.NN.Training;
 
 public class TrainingData {
 	protected double[] input;

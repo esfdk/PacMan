@@ -1,4 +1,4 @@
-package pacman.entries.jmelPacMan.NN;
+package pacman.entries.jmelPacMan.jmelNNPacMan.NN;
 
 public class Synapse {
 
