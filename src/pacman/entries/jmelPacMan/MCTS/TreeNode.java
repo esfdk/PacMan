@@ -54,13 +54,8 @@ public class TreeNode
 		this.totSSurvival = 0.0;
 	}
 
-	/**
-	 * Gets the best child of the node.
-	 */
 	public TreeNode bestChild()
 	{
-		// If there are children that have not been visited at least
-		// VISIT_THRESHOLD times, visit one of them.
 		List<TreeNode> unvisitedChildren = new ArrayList<TreeNode>();
 		for (TreeNode child : children)
 			if (child.visits < MCTS.VISIT_THRESHOLD)
@@ -69,7 +64,6 @@ public class TreeNode
 		if (unvisitedChildren.size() > 0)
 			return unvisitedChildren.get(MCTS.random.nextInt(unvisitedChildren.size()));
 
-		// Find the best child based on UCT value.
 		TreeNode bestChild = null;
 		double bestValue = -10000;
 
@@ -91,13 +85,9 @@ public class TreeNode
 		return bestChild;
 	}
 
-	/**
-	 * Expands the node and returns the new child node created
-	 */
 	public TreeNode expand()
 	{
 		Game tempGame;
-		MOVE[] untriedActions = this.getUntriedActions();
 		TreeNode newNode = null;
 
 		for (Map.Entry<MOVE, Boolean> entry : actions.entrySet())
@@ -122,35 +112,6 @@ public class TreeNode
 		return this.bestChild();
 	}
 
-	/**
-	 * Gets the untried actions for this node.
-	 */
-	private MOVE[] getUntriedActions()
-	{
-		int untried = 0;
-		MOVE[] untriedActions;
-
-		for (Map.Entry<MOVE, Boolean> entry : actions.entrySet())
-			if (entry.getValue() == false)
-				untried++;
-
-		untriedActions = new MOVE[untried];
-		untried = 0;
-		for (Map.Entry<MOVE, Boolean> entry : actions.entrySet())
-		{
-			if (entry.getValue() == false)
-			{
-				untriedActions[untried] = entry.getKey();
-				untried++;
-			}
-		}
-
-		return untriedActions;
-	}
-
-	/**
-	 * Gets the score of the node.
-	 */
 	public double getScore()
 	{
 		if (MCTS.SURVIVAL)
@@ -167,9 +128,7 @@ public class TreeNode
 		}
 	}
 
-	/**
-	 * Gets the RSurvival value (see 4.4 in paper)
-	 */
+
 	public double getRewardSurvival()
 	{
 		if (!gs.wasPacManEaten())
@@ -183,9 +142,6 @@ public class TreeNode
 		return (this.pathLength - min) / (max - min);
 	}
 
-	/**
-	 * Gets the RPill value (see 4.4 in paper)
-	 */
 	public double getRewardPill()
 	{
 		if (gs.getMazeIndex() != MCTS.ROOT_MAZE_INDEX)
@@ -208,9 +164,6 @@ public class TreeNode
 		return normalized;
 	}
 
-	/**
-	 * Updates the various score values (see 4.1 in paper)
-	 */
 	public void updateValues(double sPill, double sSurvival)
 	{
 		visits++;
@@ -233,9 +186,6 @@ public class TreeNode
 
 		avgSPill = pillSum / average;
 		avgSSurvival = survivalSum / average;
-
-		// avgSPill = totSPill / average;
-		// avgSSurvival = totSSurvival / average;
 
 		if (sPill > maxSPill)
 			maxSPill = sPill;

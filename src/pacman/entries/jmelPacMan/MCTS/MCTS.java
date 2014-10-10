@@ -48,11 +48,8 @@ public class MCTS
 		while (timeLeft > 0.5 && currIteration < 100)
 		{
 			long currentTime = System.currentTimeMillis();
-			// Selection + Expansion
 			currNode = selection();
-			// Playout / simulation
 			TreeNode tempNode = playout(currNode);
-			// Backpropagation
 			backpropagate(currNode, tempNode);
 			currIteration++;
 			timeLeft -= System.currentTimeMillis() - currentTime;
@@ -74,24 +71,16 @@ public class MCTS
 
 		for (TreeNode tn : root.children)
 		{
-			// System.out.println(tn.getMoveTo() + " | " + tn.visits + " | " + tn.getScore());
 			if (tn.getScore() > chosenNodeScore)
 			{
 				chosenNode = tn;
 				chosenNodeScore = tn.getScore();
 			}
 		}
-		// System.out.println("Chosen move: " + chosenNode.getMoveTo());
-		// System.out.println("--------------");
 
 		return chosenNode;
 	}
 
-	/**
-	 * Selection + Expansion from paper.
-	 * 
-	 * @return Newly expanded node.
-	 */
 	private TreeNode selection()
 	{
 		TreeNode tempNode = root;
@@ -106,12 +95,6 @@ public class MCTS
 		return tempNode;
 	}
 
-	/**
-	 * Simulates a play starting at the given node.
-	 * 
-	 * @param node
-	 * @return The node that the simulation ends at.
-	 */
 	private TreeNode playout(TreeNode node)
 	{
 		TreeNode tempNode = node;
@@ -141,11 +124,6 @@ public class MCTS
 		return tempNode;
 	}
 
-	/**
-	 * Backpropagates the tree, using the given node as start point.
-	 * 
-	 * @param nodeToBeUpdated
-	 */
 	public void backpropagate(TreeNode nodeToBeUpdated, TreeNode finalSimulationNode)
 	{
 		TreeNode tempNode = nodeToBeUpdated;
