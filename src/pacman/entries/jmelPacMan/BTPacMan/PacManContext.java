@@ -30,17 +30,17 @@ public class PacManContext extends Context
 	/**
 	 * A ghost can be no closer than this before PacMan flees.
 	 */
-	public final int MINIMUM_GHOST_DISTANCE;
+	public int MINIMUM_GHOST_DISTANCE;
 	
 	/**
 	 * How far PacMan should look for other ghosts when deciding which way to flee from a ghost.
 	 */
-	public final int FLEE_SEARCH_RANGE;
+	public int FLEE_SEARCH_RANGE;
 	
 	/**
 	 * How close a ghost should be before PacMan chases it in an attempt to eat it.
 	 */
-	public final int EAT_GHOST_DISTANCE;
+	public int EAT_GHOST_DISTANCE;
 	
 	/**
 	 * Array of active pill indices.
@@ -75,6 +75,14 @@ public class PacManContext extends Context
 		activePowerPills = new int[0];
 		targetNodeIndices = new int[0];
 		targetList = new ArrayList<Integer>();
+	}
+	
+	public PacManContext(int minDist, int fleeRange, int eatDist)
+	{
+		super();
+		MINIMUM_GHOST_DISTANCE = minDist;
+		FLEE_SEARCH_RANGE = fleeRange;
+		EAT_GHOST_DISTANCE = eatDist;
 	}
 	
 	public void setVariables(Game game)

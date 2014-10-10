@@ -22,6 +22,10 @@ public class FindPossibleTargets extends PacManAction
 	{
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see pacman.entries.jmelPacMan.BT.Behaviour#run(pacman.entries.jmelPacMan.BT.Context)
+	 */
 	@Override
 	public STATUS run(Context context)
 	{

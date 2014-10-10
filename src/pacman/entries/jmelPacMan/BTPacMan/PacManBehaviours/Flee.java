@@ -23,7 +23,6 @@ public class Flee extends PacManAction
 	 */
 	public Flee()
 	{
-
 	}
 
 	/**
