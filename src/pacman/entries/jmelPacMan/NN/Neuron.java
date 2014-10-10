@@ -46,7 +46,7 @@ public class Neuron
 	public void activate()
 	{
 		calculateWeightedSum();
-		output = Helper.Sigmoid(weightedSum);
+		output = sigmoid(weightedSum);
 	}
 
 	public double getOutput()
@@ -86,5 +86,14 @@ public class Neuron
 		}
 
 		return weights;
+	}
+	
+	/**
+	 * Calculates the Sigmoid value from input value and response values.
+	 * @param inputValue The input value.
+	 * @return The resulting Sigmoid value.
+	 */
+	private static double sigmoid(double inputValue) {
+		return 1.0 / (1.0 + Math.exp(-1.0 * inputValue));
 	}
 }

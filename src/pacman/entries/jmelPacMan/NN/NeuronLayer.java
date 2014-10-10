@@ -3,17 +3,19 @@ package pacman.entries.jmelPacMan.NN;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NeuronLayer {
+public class NeuronLayer
+{
 	private List<Neuron> neurons;
 	private NeuronLayer previousLayer;
 	private NeuronLayer nextLayer;
 	private Neuron bias;
 
-	public NeuronLayer() {
+	public NeuronLayer()
+	{
 		neurons = new ArrayList<Neuron>();
 		previousLayer = null;
 	}
-	
+
 	public NeuronLayer(Neuron bias)
 	{
 		this();
@@ -21,81 +23,99 @@ public class NeuronLayer {
 		neurons.add(bias);
 	}
 
-	public NeuronLayer(NeuronLayer previousLayer) {
+	public NeuronLayer(NeuronLayer previousLayer)
+	{
 		this();
 		this.previousLayer = previousLayer;
 	}
 
-	public NeuronLayer(NeuronLayer previousLayer, Neuron bias) {
+	public NeuronLayer(NeuronLayer previousLayer, Neuron bias)
+	{
 		this(previousLayer);
 		this.bias = bias;
 		neurons.add(bias);
 	}
 
-	public List<Neuron> getNeurons() {
+	public List<Neuron> getNeurons()
+	{
 		return this.neurons;
 	}
 
-	public void addNeuron(Neuron neuron) {
+	public void addNeuron(Neuron neuron)
+	{
 		neurons.add(neuron);
 
-		if (previousLayer != null) {
-			for (Neuron previousLayerNeuron : previousLayer.getNeurons()) {
+		if (previousLayer != null)
+		{
+			for (Neuron previousLayerNeuron : previousLayer.getNeurons())
+			{
+				// initialize with a random weight between -1 and 1
 				neuron.addInput(new Synapse(previousLayerNeuron,
-						(Math.random() * 1) - 0.5)); // initialize with a random
-														// weight between -1 and
-														// 1
+						(Math.random() * 1) - 0.5));
 			}
 		}
 	}
 
-	public void addNeuron(Neuron neuron, double[] weights) {
+	public void addNeuron(Neuron neuron, double[] weights)
+	{
 		neurons.add(neuron);
 
-		if (previousLayer != null) {
+		if (previousLayer != null)
+		{
 
-			if (previousLayer.getNeurons().size() != weights.length) {
+			if (previousLayer.getNeurons().size() != weights.length)
+			{
 				throw new IllegalArgumentException(
 						"The number of weights supplied must be equal to the number of neurons in the previous layer");
-			} else {
+			}
+			else
+			{
 				List<Neuron> previousLayerNeurons = previousLayer.getNeurons();
-				for (int i = 0; i < previousLayerNeurons.size(); i++) {
-					neuron.addInput(new Synapse(previousLayerNeurons.get(i),
-							weights[i]));
+				for (int i = 0; i < previousLayerNeurons.size(); i++)
+				{
+					neuron.addInput(new Synapse(previousLayerNeurons.get(i), weights[i]));
 				}
 			}
 		}
 	}
 
-	public void feedForward() {
+	public void feedForward()
+	{
 		int biasCount = hasBias() ? 1 : 0;
 
-		for (int i = biasCount; i < neurons.size(); i++) {
+		for (int i = biasCount; i < neurons.size(); i++)
+		{
 			neurons.get(i).activate();
 		}
 	}
 
-	public NeuronLayer getPreviousLayer() {
+	public NeuronLayer getPreviousLayer()
+	{
 		return previousLayer;
 	}
 
-	void setPreviousLayer(NeuronLayer previousLayer) {
+	void setPreviousLayer(NeuronLayer previousLayer)
+	{
 		this.previousLayer = previousLayer;
 	}
 
-	public NeuronLayer getNextLayer() {
+	public NeuronLayer getNextLayer()
+	{
 		return nextLayer;
 	}
 
-	void setNextLayer(NeuronLayer nextLayer) {
+	void setNextLayer(NeuronLayer nextLayer)
+	{
 		this.nextLayer = nextLayer;
 	}
 
-	public boolean isOutputLayer() {
+	public boolean isOutputLayer()
+	{
 		return nextLayer == null;
 	}
 
-	public boolean hasBias() {
+	public boolean hasBias()
+	{
 		return bias != null;
 	}
 }

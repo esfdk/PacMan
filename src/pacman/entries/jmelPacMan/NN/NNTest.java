@@ -10,18 +10,18 @@ public class NNTest
 
 	public static void main(String[] args)
 	{
-//		System.out.println("=====");
-//		AND();
-//		System.out.println("=====");
-//		XOR();
-//		System.out.println("=====");
-		
-		for(int i = 5; i <= 5; i++)
+
+	}
+
+	@SuppressWarnings("unused")
+	private static void pacManNetwork()
+	{
+		int numberOfHiddenNodes = 5;
+		int numberOfNetworksToTrain = 1;
+
+		for (int j = 0; j < numberOfNetworksToTrain; j++)
 		{
-			for(int j = 0; j < 1; j++)
-			{
-				NNPacMan.newController(i);
-			}
+			NNPacMan.newController(numberOfHiddenNodes);
 		}
 	}
 
@@ -42,12 +42,18 @@ public class NNTest
 		nn.addLayer(inputLayer);
 		nn.addLayer(outputLayer);
 		nn.feedForward();
-		double[] in1 = { 0, 0 };
-		double[] in2 = { 0, 1 };
-		double[] in3 = { 1, 0 };
-		double[] in4 = { 1, 1 };
-		double[] out1 = { 1 };
-		double[] out2 = { 0 };
+		double[] in1 =
+		{ 0, 0 };
+		double[] in2 =
+		{ 0, 1 };
+		double[] in3 =
+		{ 1, 0 };
+		double[] in4 =
+		{ 1, 1 };
+		double[] out1 =
+		{ 1 };
+		double[] out2 =
+		{ 0 };
 		TrainingSet ts = new TrainingSet();
 		TrainingData td1 = new TrainingData(2, 1);
 		td1.setData(in1, out2);
@@ -104,12 +110,18 @@ public class NNTest
 		nn.addLayer(h1Layer);
 		nn.addLayer(outputLayer);
 		nn.feedForward();
-		double[] in1 = { 0, 0 };
-		double[] in2 = { 0, 1 };
-		double[] in3 = { 1, 0 };
-		double[] in4 = { 1, 1 };
-		double[] out1 = { 1 };
-		double[] out2 =	{ 0 };
+		double[] in1 =
+		{ 0, 0 };
+		double[] in2 =
+		{ 0, 1 };
+		double[] in3 =
+		{ 1, 0 };
+		double[] in4 =
+		{ 1, 1 };
+		double[] out1 =
+		{ 1 };
+		double[] out2 =
+		{ 0 };
 		TrainingSet ts = new TrainingSet();
 		TrainingData td1 = new TrainingData(2, 1);
 		td1.setData(in1, out2);

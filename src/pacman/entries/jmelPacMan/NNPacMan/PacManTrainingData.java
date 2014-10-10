@@ -43,7 +43,6 @@ public class PacManTrainingData extends TrainingData
 		input[0] = dt.normalizeLevel(dt.mazeIndex);
 		input[1] = dt.normalizeLevel(dt.currentLevel);
 		input[2] = dt.normalizePosition(dt.pacmanPosition);
-//		input[3] = dt.pacmanLivesLeft;
 		input[3] = dt.normalizeCurrentScore(dt.currentScore);
 		input[4] = dt.normalizeTotalGameTime(dt.totalGameTime);
 		input[5] = dt.normalizeCurrentLevelTime(dt.currentLevelTime);

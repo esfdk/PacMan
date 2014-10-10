@@ -126,20 +126,6 @@ public class NeuralNetwork
 		return layers;
 	}
 
-	public void reset()
-	{
-		for (NeuronLayer layer : layers)
-		{
-			for (Neuron neuron : layer.getNeurons())
-			{
-				for (Synapse synapse : neuron.getInputs())
-				{
-					synapse.setWeight((Math.random() * 1) - 0.5);
-				}
-			}
-		}
-	}
-
 	public double[] getWeights()
 	{
 
@@ -170,60 +156,6 @@ public class NeuralNetwork
 		return allWeights;
 	}
 
-	public NeuralNetwork copy()
-	{
-		NeuralNetwork copy = new NeuralNetwork(this.name + "_copy");
-
-		NeuronLayer previousLayer = null;
-		for (NeuronLayer layer : layers)
-		{
-
-			NeuronLayer layerCopy;
-
-			if (layer.hasBias())
-			{
-				Neuron bias = layer.getNeurons().get(0);
-				Neuron biasCopy = new Neuron();
-				biasCopy.setOutput(bias.getOutput());
-				layerCopy = new NeuronLayer(null, biasCopy);
-			}
-
-			else
-			{
-				layerCopy = new NeuronLayer();
-			}
-
-			layerCopy.setPreviousLayer(previousLayer);
-
-			int biasCount = layerCopy.hasBias() ? 1 : 0;
-
-			for (int i = biasCount; i < layer.getNeurons().size(); i++)
-			{
-				Neuron neuron = layer.getNeurons().get(i);
-
-				Neuron neuronCopy = new Neuron();
-				neuronCopy.setOutput(neuron.getOutput());
-				neuronCopy.setError(neuron.getError());
-
-				if (neuron.getInputs().size() == 0)
-				{
-					layerCopy.addNeuron(neuronCopy);
-				}
-
-				else
-				{
-					double[] weights = neuron.getWeights();
-					layerCopy.addNeuron(neuronCopy, weights);
-				}
-			}
-
-			copy.addLayer(layerCopy);
-			previousLayer = layerCopy;
-		}
-
-		return copy;
-	}
-
 	public void setWeights(double[] weights)
 	{
 		int w = 0;
@@ -240,54 +172,6 @@ public class NeuralNetwork
 					w++;
 				}
 			}
-		}
-	}
-
-	public void copyWeightsFrom(NeuralNetwork sourceNeuralNetwork)
-	{
-		if (layers.size() != sourceNeuralNetwork.layers.size())
-		{
-			throw new IllegalArgumentException("Cannot copy weights. Number of layers do not match ("
-					+ sourceNeuralNetwork.layers.size() + " in source versus " + layers.size() + " in destination)");
-		}
-
-		int i = 0;
-		for (NeuronLayer sourceLayer : sourceNeuralNetwork.layers)
-		{
-			NeuronLayer destinationLayer = layers.get(i);
-
-			if (destinationLayer.getNeurons().size() != sourceLayer.getNeurons().size())
-			{
-				throw new IllegalArgumentException("Number of neurons do not match in layer " + (i + 1) + "("
-						+ sourceLayer.getNeurons().size() + " in source versus " + destinationLayer.getNeurons().size()
-						+ " in destination)");
-			}
-
-			int j = 0;
-			for (Neuron sourceNeuron : sourceLayer.getNeurons())
-			{
-				Neuron destinationNeuron = destinationLayer.getNeurons().get(j);
-
-				if (destinationNeuron.getInputs().size() != sourceNeuron.getInputs().size())
-				{
-					throw new IllegalArgumentException("Number of inputs to neuron " + (j + 1) + " in layer " + (i + 1)
-							+ " do not match (" + sourceNeuron.getInputs().size() + " in source versus "
-							+ destinationNeuron.getInputs().size() + " in destination)");
-				}
-
-				int k = 0;
-				for (Synapse sourceSynapse : sourceNeuron.getInputs())
-				{
-					Synapse destinationSynapse = destinationNeuron.getInputs().get(k);
-
-					destinationSynapse.setWeight(sourceSynapse.getWeight());
-					k++;
-				}
-
-				j++;
-			}
-
-			i++;
 		}
 	}
 

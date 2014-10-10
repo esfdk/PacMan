@@ -1,7 +1,5 @@
 package pacman.entries.jmelPacMan.NN;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 
 import pacman.entries.jmelPacMan.NN.Training.TrainingData;
@@ -9,17 +7,14 @@ import pacman.entries.jmelPacMan.NN.Training.TrainingSet;
 
 public class Backpropagator
 {
-	private boolean debugLogging = false; // Controls prints to console
-
 	private NeuralNetwork neuralNetwork; // Neural network to train
-	private int samplesToAverageOver = 25; // Number of samples to average errors over.
+	private int samples = 25; // Number of samples to average errors over.
 	private double learningRate = 0.0;
 	private double startingLearningRate = 1.0; // Starting learning rate for the backpropagation algorithm
 	private double errorThreshold = 0.05; // Learning stops after average error is below this value.
 	private int maximumEpochs = 1000; // Maximum number of epochs to train on.
 	private int epochsPerIteration = maximumEpochs >= 400 ? maximumEpochs / 400 : 10; // Amount of epochs per learning iteration.
-	private double maxWeightChange = 0.0001; // Maximum amount of change in a single weight in the neural network during
-												// training.
+	private double maxWeightChange = 0.0001; // Maximum amount of change in a single weight during training.
 	private double maximumMisclassificationPercentage = 0.05; // Maximum amount of misclassified tuples allowed in an epoch.
 
 	public Backpropagator(NeuralNetwork nn)
@@ -41,8 +36,6 @@ public class Backpropagator
 
 	public void train(TrainingSet ts)
 	{
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-
 		learningRate = startingLearningRate; // Initialize learning rate
 
 		int epoch = 1; // Current epoch
@@ -54,8 +47,8 @@ public class Backpropagator
 
 		// Average error variables
 		double errorSumOfSamples = 0.0;
-		double epochAverageError = (double) samplesToAverageOver;
-		double[] errors = new double[samplesToAverageOver];
+		double epochAverageError = (double) samples;
+		double[] errors = new double[samples];
 
 		do
 		{
@@ -63,16 +56,16 @@ public class Backpropagator
 			tc = backpropagate(ts);
 
 			// Remove previous sample from error sum
-			errorSumOfSamples -= (errors[epoch % samplesToAverageOver]);
+			errorSumOfSamples -= (errors[epoch % samples]);
 			// Update sample value with new error value
-			errors[epoch % samplesToAverageOver] = tc.errorSum;
+			errors[epoch % samples] = tc.errorSum;
 			// Add new sample to error sum
-			errorSumOfSamples += (errors[epoch % samplesToAverageOver]);
+			errorSumOfSamples += (errors[epoch % samples]);
 
 			// If enough samples have been collected, start calculating average.
-			if (epoch > samplesToAverageOver)
+			if (epoch > samples)
 			{
-				epochAverageError = errorSumOfSamples / samplesToAverageOver;
+				epochAverageError = errorSumOfSamples / samples;
 			}
 
 			// Increase epoch
@@ -83,47 +76,12 @@ public class Backpropagator
 			{
 				learningIteration++;
 				learningRate = startingLearningRate / learningIteration;
-
-				// Calendar cal = Calendar.getInstance();
-				// cal.getTime();
-				// System.out.println( sdf.format(cal.getTime()) + " | Current learning rate: " + learningRate +
-				// " | Current epoch: " + epoch);
 			}
-
-			if (debugLogging)
-			{
-				if (epoch % samplesToAverageOver == 0)
-				{
-					System.out.println(epoch + " = " + epochAverageError + " ||| " + tc.errorSum);
-				}
-			}
-
-			if (debugLogging)
-			{
-				if (epochAverageError < errorThreshold)
-				{
-					System.out
-							.println("Woop, average (" + epochAverageError + ") is lower than error after " + epoch + " epochs");
-				}
-			}
-
-			if (epoch % 100 == 0)
-			{
-				Calendar cal = Calendar.getInstance();
-				cal.getTime();
-				System.out.println(sdf.format(cal.getTime()) + " | Current learning rate: " + learningRate + " | Current epoch: "
-						+ epoch);
-			}
-
 		} while (epoch < maximumEpochs // Continue training until maximum epochs have passed
 				&& epochAverageError > errorThreshold // or average error is less than or equal to error threshold
 				&& tc.maxChange > maxWeightChange // or maximum change in weights is less than or equal to threshold
 				&& tc.percentMisclassifiedTuples > maximumMisclassificationPercentage); // or percentage of misclassified tuples
 																						// is below or equal to threshold
-
-		// Print terminating condition values
-		if (debugLogging)
-			System.out.println(epochAverageError + " | " + tc.maxChange + " | " + tc.percentMisclassifiedTuples + " | " + epoch);
 	}
 
 	private TerminatingConditions backpropagate(TrainingSet ts)
@@ -168,11 +126,6 @@ public class Backpropagator
 
 					double deltaWeight = learningRate * n.getError();
 					s.setWeight(s.getWeight() + deltaWeight);
-
-					// if (maxChange < Math.abs(deltaWeight))
-					// {
-					// maxChange = Math.abs(deltaWeight);
-					// }
 				}
 
 				for (int sIndex = bias; sIndex < synapses.size(); sIndex++)
@@ -215,10 +168,6 @@ public class Backpropagator
 
 						double deltaWeight = learningRate * n.getError();
 						s.setWeight(s.getWeight() + deltaWeight);
-						// if (maxChange < Math.abs(deltaWeight))
-						// {
-						// maxChange = Math.abs(deltaWeight);
-						// }
 					}
 
 					for (int sIndex = previousLayerBias; sIndex < synapses.size(); sIndex++)
@@ -252,7 +201,6 @@ public class Backpropagator
 		tc.maxChange = maxChange;
 
 		return tc;
-
 	}
 
 	private double sumError(double[] actual, double[] expected)
