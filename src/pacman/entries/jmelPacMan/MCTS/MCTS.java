@@ -132,7 +132,7 @@ public class MCTS
 					return new TreeNode(tempGame, tempNode, tempNode.getPathLength() + 1);
 				}
 
-				tempGame.advanceGame(MOVE.NEUTRAL, MCTS.ghostStrategy.getMove(tempGame, MCTS.GHOST_MOVE_TIME));
+				tempGame.advanceGame(m, MCTS.ghostStrategy.getMove(tempGame, MCTS.GHOST_MOVE_TIME));
 			}
 
 			tempNode = new TreeNode(tempGame, tempNode, tempNode.getPathLength() + 1.0);
