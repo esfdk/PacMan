@@ -5,7 +5,7 @@ import pacman.entries.jmelPacMan.BTPacMan.PacManContext;
 
 /**
  * An action in the PacMan Behaviour tree.
- * @author Jakob Melnyk
+ * @author Jakob Melnyk (jmel)
  */
 public abstract class PacManAction extends Action
 {

@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * A selector behaviour; it performs the actions of each of its children in sequence and succeeds if any of its children succeeds, otherwise, it
  * fails.
  * Based on code by notmagi, http://notmagi.me/behavior-trees-number-1/
- * @author Jakob Melnyk
+ * @author Jakob Melnyk (jmel)
  */
 public class Selector extends Behaviour
 {

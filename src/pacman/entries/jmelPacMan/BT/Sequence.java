@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * A sequence behaviour; it performs the actions of each of its children in sequence and succeeds if all of its children succeed, otherwise, it
  * fails.
  * Based on code by notmagi, http://notmagi.me/behavior-trees-number-1/
- * @author Jakob Melnyk
+ * @author Jakob Melnyk (jmel)
  */
 public class Sequence extends Behaviour
 {

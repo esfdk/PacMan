@@ -3,7 +3,7 @@ package pacman.entries.jmelPacMan.BT;
 /**
  * A decorator that inverts the the results of a behaviour.
  * Based on code by notmagi, http://notmagi.me/behavior-trees-number-1/ 
- * @author Jakob Melnyk
+ * @author Jakob Melnyk (jmel)
  */
 public class InverterDecorator extends Decorator
 {

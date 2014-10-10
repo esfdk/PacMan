@@ -3,7 +3,7 @@ package pacman.entries.jmelPacMan.BT;
 /**
  * Behaviour decorator for repeating a behaviour until it returns failure.
  * Based on code by notmagi, http://notmagi.me/behavior-trees-number-1/
- * @author Jakob Melnyk
+ * @author Jakob Melnyk (jmel)
  */
 public class RepeatUntilFailDecorator extends Decorator
 {

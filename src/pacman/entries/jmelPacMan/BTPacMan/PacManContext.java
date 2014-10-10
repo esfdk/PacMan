@@ -8,7 +8,7 @@ import pacman.game.Game;
 
 /**
  * The context of the PacMan game for use in the behaviour tree.
- * @author Jakob Melnyk
+ * @author Jakob Melnyk (jmel)
  */
 public class PacManContext extends Context
 {

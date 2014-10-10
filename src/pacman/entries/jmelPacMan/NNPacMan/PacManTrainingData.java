@@ -1,8 +1,8 @@
 package pacman.entries.jmelPacMan.NNPacMan;
 
 import pacman.entries.jmelPacMan.NN.Training.TrainingData;
+import pacman.entries.jmelPacMan.dataRecording.DataTuple;
 import pacman.game.Constants.MOVE;
-import dataRecording.DataTuple;
 
 public class PacManTrainingData extends TrainingData
 {
@@ -41,97 +41,95 @@ public class PacManTrainingData extends TrainingData
 	public static void fillInputArrayFromDataTuple(double[] input, DataTuple dt)
 	{
 		input[0] = dt.normalizeLevel(dt.mazeIndex);
-		input[1] = dt.normalizeLevel(dt.currentLevel);
-		input[2] = dt.normalizePosition(dt.pacmanPosition);
-		input[3] = dt.normalizeCurrentScore(dt.currentScore);
-		input[4] = dt.normalizeTotalGameTime(dt.totalGameTime);
-		input[5] = dt.normalizeCurrentLevelTime(dt.currentLevelTime);
-		input[6] = dt.normalizeNumberOfPills(dt.numOfPillsLeft);
-		input[7] = dt.normalizeNumberOfPowerPills(dt.numOfPowerPillsLeft);
+//		input[1] = dt.normalizeLevel(dt.currentLevel);
+		input[1] = dt.normalizePosition(dt.pacmanPosition);
+//		input[3] = dt.normalizeCurrentScore(dt.currentScore);
+//		input[4] = dt.normalizeTotalGameTime(dt.totalGameTime);
+		input[2] = dt.normalizeCurrentLevelTime(dt.currentLevelTime);
+		input[3] = dt.normalizeNumberOfPills(dt.numOfPillsLeft);
+		input[4] = dt.normalizeNumberOfPowerPills(dt.numOfPowerPillsLeft);
 		// Ghosts edible?
-		input[8] = dt.normalizeBoolean(dt.isBlinkyEdible);
-		input[9] = dt.normalizeBoolean(dt.isInkyEdible);
-		input[10] = dt.normalizeBoolean(dt.isPinkyEdible);
-		input[11] = dt.normalizeBoolean(dt.isSueEdible);
+		input[5] = dt.normalizeBoolean(dt.isBlinkyEdible);
+		input[6] = dt.normalizeBoolean(dt.isInkyEdible);
+		input[7] = dt.normalizeBoolean(dt.isPinkyEdible);
+		input[8] = dt.normalizeBoolean(dt.isSueEdible);
 		// Ghost distance
-		input[12] = dt.normalizeDistance(dt.blinkyDist);
-		input[13] = dt.normalizeDistance(dt.inkyDist);
-		input[14] = dt.normalizeDistance(dt.pinkyDist);
-		input[15] = dt.normalizeDistance(dt.sueDist);
+		input[9] = dt.normalizeDistance(dt.blinkyDist);
+		input[10] = dt.normalizeDistance(dt.inkyDist);
+		input[11] = dt.normalizeDistance(dt.pinkyDist);
+		input[12] = dt.normalizeDistance(dt.sueDist);
 		// Ghost direction
-		input[16] = moveToDouble(dt.blinkyDir);
-
-		for(int ghostDirectionInputs = 16; ghostDirectionInputs <= 31; ghostDirectionInputs++)
-		{
-			input[ghostDirectionInputs] = 0.0;
-		}
-
-		switch (dt.blinkyDir)
-		{
-				case UP:
-					input[16] = MAX_VALUE;
-					break;
-				case RIGHT:
-					input[17] = MAX_VALUE;
-					break;
-				case DOWN:
-					input[18] = MAX_VALUE;
-					break;
-				case LEFT:
-					input[19] = MAX_VALUE;
-					break;
-				default:
-					break;
-		}
-		switch (dt.inkyDir)
-		{
-				case UP:
-					input[20] = MAX_VALUE;
-					break;
-				case RIGHT:
-					input[21] = MAX_VALUE;
-					break;
-				case DOWN:
-					input[22] = MAX_VALUE;
-					break;
-				case LEFT:
-					input[23] = MAX_VALUE;
-					break;
-				default:
-					break;
-		}switch (dt.pinkyDir)
-		{
-				case UP:
-					input[24] = MAX_VALUE;
-					break;
-				case RIGHT:
-					input[25] = MAX_VALUE;
-					break;
-				case DOWN:
-					input[26] = MAX_VALUE;
-					break;
-				case LEFT:
-					input[27] = MAX_VALUE;
-					break;
-				default:
-					break;
-		}switch (dt.sueDir)
-		{
-				case UP:
-					input[28] = MAX_VALUE;
-					break;
-				case RIGHT:
-					input[29] = MAX_VALUE;
-					break;
-				case DOWN:
-					input[30] = MAX_VALUE;
-					break;
-				case LEFT:
-					input[31] = MAX_VALUE;
-					break;
-				default:
-					break;
-		}
+//		for(int ghostDirectionInputs = 16; ghostDirectionInputs <= 31; ghostDirectionInputs++)
+//		{
+//			input[ghostDirectionInputs] = 0.0;
+//		}
+//
+//		switch (dt.blinkyDir)
+//		{
+//				case UP:
+//					input[16] = MAX_VALUE;
+//					break;
+//				case RIGHT:
+//					input[17] = MAX_VALUE;
+//					break;
+//				case DOWN:
+//					input[18] = MAX_VALUE;
+//					break;
+//				case LEFT:
+//					input[19] = MAX_VALUE;
+//					break;
+//				default:
+//					break;
+//		}
+//		switch (dt.inkyDir)
+//		{
+//				case UP:
+//					input[20] = MAX_VALUE;
+//					break;
+//				case RIGHT:
+//					input[21] = MAX_VALUE;
+//					break;
+//				case DOWN:
+//					input[22] = MAX_VALUE;
+//					break;
+//				case LEFT:
+//					input[23] = MAX_VALUE;
+//					break;
+//				default:
+//					break;
+//		}switch (dt.pinkyDir)
+//		{
+//				case UP:
+//					input[24] = MAX_VALUE;
+//					break;
+//				case RIGHT:
+//					input[25] = MAX_VALUE;
+//					break;
+//				case DOWN:
+//					input[26] = MAX_VALUE;
+//					break;
+//				case LEFT:
+//					input[27] = MAX_VALUE;
+//					break;
+//				default:
+//					break;
+//		}switch (dt.sueDir)
+//		{
+//				case UP:
+//					input[28] = MAX_VALUE;
+//					break;
+//				case RIGHT:
+//					input[29] = MAX_VALUE;
+//					break;
+//				case DOWN:
+//					input[30] = MAX_VALUE;
+//					break;
+//				case LEFT:
+//					input[31] = MAX_VALUE;
+//					break;
+//				default:
+//					break;
+//		}
 	}
 	
 	public static double moveToDouble(MOVE move)

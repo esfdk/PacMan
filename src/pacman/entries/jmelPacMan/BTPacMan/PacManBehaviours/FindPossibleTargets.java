@@ -10,8 +10,7 @@ import pacman.game.Game;
 
 /**
  * Action for finding PacMan's possible targets.
- * 
- * @author Jakob Melnyk
+ * @author Jakob Melnyk (jmel)
  */
 public class FindPossibleTargets extends PacManAction
 {

@@ -1,4 +1,4 @@
-package dataRecording;
+package pacman.entries.jmelPacMan.dataRecording;
 
 import pacman.game.util.*;
 

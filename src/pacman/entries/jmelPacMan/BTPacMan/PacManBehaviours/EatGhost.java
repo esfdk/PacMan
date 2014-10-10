@@ -8,7 +8,7 @@ import pacman.game.Game;
 
 /**
  * Attempts to find an edible ghost and chase it down.
- * @author Jakob Melnyk
+ * @author Jakob Melnyk (jmel)
  */
 public class EatGhost extends PacManAction
 {

@@ -3,7 +3,7 @@ package pacman.entries.jmelPacMan.BT;
 /**
  * Class used to pass information through the behaviour tree.
  * Based on code by notmagi, http://notmagi.me/behavior-trees-number-1/
- * @author Jakob Melnyk
+ * @author Jakob Melnyk (jmel)
  */
 public abstract class Context
 {

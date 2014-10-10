@@ -13,7 +13,7 @@ public class Backpropagator
 	private double startingLearningRate = 1.0; // Starting learning rate for the backpropagation algorithm
 	private double errorThreshold = 0.05; // Learning stops after average error is below this value.
 	private int maximumEpochs = 1000; // Maximum number of epochs to train on.
-	private int epochsPerIteration = maximumEpochs >= 400 ? maximumEpochs / 400 : 10; // Amount of epochs per learning iteration.
+	private int epochsPerIteration = 25; // Amount of epochs per learning iteration.
 	private double maxWeightChange = 0.0001; // Maximum amount of change in a single weight during training.
 	private double maximumMisclassificationPercentage = 0.05; // Maximum amount of misclassified tuples allowed in an epoch.
 

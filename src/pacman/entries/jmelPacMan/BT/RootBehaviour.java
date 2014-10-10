@@ -3,7 +3,7 @@ package pacman.entries.jmelPacMan.BT;
 /**
  * The root of the tree. 
  * Based on code by notmagi, http://notmagi.me/behavior-trees-number-1/
- * @author Jakob Melnyk
+ * @author Jakob Melnyk (jmel)
  */
 public class RootBehaviour extends Behaviour
 {

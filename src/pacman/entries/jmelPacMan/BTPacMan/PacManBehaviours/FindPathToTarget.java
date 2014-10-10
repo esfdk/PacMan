@@ -7,9 +7,7 @@ import pacman.game.Game;
 
 /**
  * Action that finds the path to closest of PacMans targets.
- * 
- * @author Jakob Melnyk
- *
+ * @author Jakob Melnyk (jmel)
  */
 public class FindPathToTarget extends PacManAction
 {

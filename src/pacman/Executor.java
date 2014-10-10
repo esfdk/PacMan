@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Random;
 
-import dataRecording.DataCollectorController;
 import pacman.controllers.Controller;
 import pacman.controllers.HumanController;
 import pacman.controllers.KeyBoardInput;
@@ -27,6 +26,7 @@ import pacman.controllers.examples.StarterPacMan;
 import pacman.entries.jmelPacMan.BTPacMan.PacManBT;
 import pacman.entries.jmelPacMan.MCTSPacMan.MCTSPacMan;
 import pacman.entries.jmelPacMan.NNPacMan.NNPacMan;
+import pacman.entries.jmelPacMan.dataRecording.DataCollectorController;
 import pacman.game.Game;
 import pacman.game.GameView;
 import static pacman.game.Constants.*;
@@ -56,7 +56,7 @@ public class Executor
 		
 		//run multiple games in batch mode - good for testing.
 		int numTrials=100;
-		exec.runExperiment(pmc1,new Legacy2TheReckoning(),numTrials);
+		exec.runExperiment(pmc2,new StarterGhosts(),numTrials);
 		
 		//run a game in synchronous mode: game waits until controllers respond.
 //		int delay=10;

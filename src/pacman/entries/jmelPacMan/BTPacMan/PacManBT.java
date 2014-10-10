@@ -8,7 +8,7 @@ import pacman.game.Game;
 
 /**
  * A PacMan Controller using a behaviour tree.
- * @author Jakob Melnyk
+ * @author Jakob Melnyk (jmel)
  */
 public class PacManBT extends Controller<MOVE>
 {

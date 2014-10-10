@@ -4,24 +4,24 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 
-import dataRecording.DataSaverLoader;
-import dataRecording.DataTuple;
 import pacman.controllers.Controller;
 import pacman.entries.jmelPacMan.NN.Backpropagator;
 import pacman.entries.jmelPacMan.NN.NeuralNetwork;
 import pacman.entries.jmelPacMan.NN.Training.TrainingSet;
+import pacman.entries.jmelPacMan.dataRecording.DataSaverLoader;
+import pacman.entries.jmelPacMan.dataRecording.DataTuple;
 import pacman.game.Constants.MOVE;
 import pacman.game.Game;
 import pacman.game.util.IO;
 
 public class NNPacMan extends Controller<MOVE>
 {
-	private boolean loadWeights = false;
+	private boolean loadWeights = true;
 	private boolean loadArray = false;
-	private String fileToLoad = "TrainedNN-2014_10_03_21_15_20_700-5.txt";
+	private String fileToLoad = "TrainedNN-2014_10_11_00_31_42_015-5.txt";
 
 	public NeuralNetwork nn;
-	private int numberOfInputs = 32;
+	private int numberOfInputs = 13;
 	private int numberOfOutputs = 4;
 	private int numberOfHiddenNodes = 5;
 
@@ -148,7 +148,7 @@ public class NNPacMan extends Controller<MOVE>
 	{
 		TrainingSet ts = getTrainingSet();
 
-		Backpropagator b = new Backpropagator(nn);
+		Backpropagator b = new Backpropagator(nn, 1.0, 0.05, 500, 25, 0.001, 0.1);
 		b.train(ts);
 	}
 

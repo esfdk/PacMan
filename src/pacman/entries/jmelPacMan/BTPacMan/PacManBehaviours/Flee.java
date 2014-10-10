@@ -11,8 +11,7 @@ import pacman.game.Game;
 
 /**
  * Attempts to find the best path away from nearby ghosts.
- * 
- * @author Jakob Melnyk
+ * @author Jakob Melnyk (jmel)
  */
 public class Flee extends PacManAction
 {

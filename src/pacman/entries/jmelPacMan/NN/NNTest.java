@@ -10,10 +10,9 @@ public class NNTest
 
 	public static void main(String[] args)
 	{
-
+		pacManNetwork();
 	}
 
-	@SuppressWarnings("unused")
 	private static void pacManNetwork()
 	{
 		int numberOfHiddenNodes = 5;

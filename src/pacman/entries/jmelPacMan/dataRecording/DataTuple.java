@@ -1,4 +1,4 @@
-package dataRecording;
+package pacman.entries.jmelPacMan.dataRecording;
 
 import pacman.game.Constants;
 import pacman.game.Constants.DM;
@@ -6,6 +6,9 @@ import pacman.game.Constants.GHOST;
 import pacman.game.Constants.MOVE;
 import pacman.game.Game;
 
+/**
+ * @author Unknown (likely andershh), with small modifications by Jakob Melnyk (jmel)
+ */
 public class DataTuple {
 	
 	public MOVE DirectionChosen;
