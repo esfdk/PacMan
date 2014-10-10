@@ -10,8 +10,6 @@ import pacman.game.Game;
 
 public class MCTS
 {
-	public static Game g;
-
 	public static double LIVES_AT_ROOT;
 	public static final double EXPLORATION_CONSTANT = 0.5;
 	public static final double MAX_PATH_TO_ROOT = 10;
@@ -37,7 +35,6 @@ public class MCTS
 		long timeSpent = 0;
 		LIVES_AT_ROOT = game.getPacmanNumberOfLivesRemaining();
 		currIteration = 0;
-		g = game;
 		PILLS_AT_ROOT = game.getNumberOfActivePills();
 		POWER_PILLS_AT_ROOT = game.getNumberOfActivePowerPills();
 		ROOT_MAZE_INDEX = game.getMazeIndex();

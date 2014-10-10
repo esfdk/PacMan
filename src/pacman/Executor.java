@@ -49,7 +49,6 @@ public class Executor
 	{
 		Executor exec=new Executor();
 		
-		
 		Controller<MOVE> pmc1 = new MCTSPacMan();
 		Controller<MOVE> pmc2 = new PacManBT();
 		Controller<MOVE> pmc3 = new NNPacMan();
@@ -58,7 +57,6 @@ public class Executor
 		//run multiple games in batch mode - good for testing.
 		int numTrials=100;
 		exec.runExperiment(pmc1,new Legacy2TheReckoning(),numTrials);
-		
 		
 		//run a game in synchronous mode: game waits until controllers respond.
 //		int delay=10;
@@ -69,9 +67,7 @@ public class Executor
 		///*
 		//run the game in asynchronous mode.
 //		boolean visual=true;
-//////		exec.runGameTimed(new NearestPillPacMan(),new AggressiveGhosts(),visual);
 //		exec.runGameTimed(pmc4, new Legacy2TheReckoning(),visual);
-//		exec.runGameTimed(new HumanController(new KeyBoardInput()),new StarterGhosts(),visual);	
 		//*/
 		
 		
