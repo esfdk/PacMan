@@ -24,6 +24,7 @@ public class FindPossibleTargets extends PacManAction
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see pacman.entries.jmelPacMan.BT.Behaviour#run(pacman.entries.jmelPacMan.BT.Context)
 	 */
 	@Override
@@ -116,10 +117,8 @@ public class FindPossibleTargets extends PacManAction
 	/**
 	 * Checks if a ghost is currently on a specified path.
 	 * 
-	 * @param ghostPositions
-	 *            Current position of ghosts.
-	 * @param path
-	 *            Path to check for ghosts.
+	 * @param ghostPositions Current position of ghosts.
+	 * @param path Path to check for ghosts.
 	 * @return True if a ghost is on the path specified, false if not.
 	 */
 	private boolean pathContainsAGhost(int[] ghostPositions, int[] path)

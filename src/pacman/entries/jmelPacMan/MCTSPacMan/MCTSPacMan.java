@@ -1,6 +1,5 @@
 package pacman.entries.jmelPacMan.MCTSPacMan;
 
-import java.util.HashMap;
 import pacman.controllers.Controller;
 import pacman.entries.jmelPacMan.MCTS.MCTS;
 import pacman.entries.jmelPacMan.MCTS.TreeNode;
@@ -9,8 +8,6 @@ import pacman.game.Game;
 
 public class MCTSPacMan extends Controller<MOVE>
 {
-	public static HashMap<Integer, Integer> nodesVisited = new HashMap<Integer, Integer>();
-
 	MCTS mcts;
 
 	public MCTSPacMan()
@@ -27,8 +24,7 @@ public class MCTSPacMan extends Controller<MOVE>
 	{
 		if (MCTS.pacManAtJunction(game))
 		{
-			nodesVisited = new HashMap<Integer, Integer>();
-			TreeNode tn = mcts.search(game, 1000);
+			TreeNode tn = mcts.search(game, timeDue);
 			MOVE move = tn == null ? MOVE.NEUTRAL : tn.getMoveTo();
 			return move;
 		}

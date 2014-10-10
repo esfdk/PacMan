@@ -24,7 +24,6 @@ public class MCTS
 	public static boolean SURVIVAL;
 	public static Random random;
 	public static Legacy2TheReckoning ghostStrategy = new Legacy2TheReckoning();
-	private long timeLeft;
 	private TreeNode root;
 	private int currIteration;
 
@@ -33,26 +32,26 @@ public class MCTS
 		random = new Random();
 	}
 
-	public TreeNode search(Game game, long time)
+	public TreeNode search(Game game, long timeDue)
 	{
+		long timeSpent = 0;
 		LIVES_AT_ROOT = game.getPacmanNumberOfLivesRemaining();
 		currIteration = 0;
 		g = game;
-		timeLeft = time;
 		PILLS_AT_ROOT = game.getNumberOfActivePills();
 		POWER_PILLS_AT_ROOT = game.getNumberOfActivePowerPills();
 		ROOT_MAZE_INDEX = game.getMazeIndex();
 		root = new TreeNode(game.copy(), null, 0);
 		TreeNode currNode = root;
 
-		while (timeLeft > 0.5 && currIteration < 100)
+		while (timeSpent < timeDue && currIteration < 100)
 		{
 			long currentTime = System.currentTimeMillis();
 			currNode = selection();
 			TreeNode tempNode = playout(currNode);
 			backpropagate(currNode, tempNode);
 			currIteration++;
-			timeLeft -= System.currentTimeMillis() - currentTime;
+			timeSpent += System.currentTimeMillis() - currentTime;
 		}
 
 		TreeNode bc = root.bestChild();

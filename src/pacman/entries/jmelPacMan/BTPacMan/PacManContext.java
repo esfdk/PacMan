@@ -63,20 +63,28 @@ public class PacManContext extends Context
 	public ArrayList<Integer> targetList;
 
 	/**
-	 * Instantiates a new instance of the PacManContextclass.
+	 * Instantiates a new instance of the PacManContext class.
 	 */
 	public PacManContext()
 	{
 		nextMove = MOVE.NEUTRAL;
+		
 		MINIMUM_GHOST_DISTANCE = 8;
 		FLEE_SEARCH_RANGE = 36;
 		EAT_GHOST_DISTANCE = 19;
+		
 		activePills = new int[0];
 		activePowerPills = new int[0];
 		targetNodeIndices = new int[0];
 		targetList = new ArrayList<Integer>();
 	}
 	
+	/**
+	 * Instantiates a new instance of the PacManContext class.
+	 * @param minDist The value of MINIMUM_GHOST_DISTANCE.
+	 * @param fleeRange The value of FLEE_SEARCH_RANGE.
+	 * @param eatDist The value of EAT_GHOST_DISTANCE.
+	 */
 	public PacManContext(int minDist, int fleeRange, int eatDist)
 	{
 		super();
@@ -85,6 +93,10 @@ public class PacManContext extends Context
 		EAT_GHOST_DISTANCE = eatDist;
 	}
 	
+	/**
+	 * Updates active pills, active power pills and current pacman position.
+	 * @param game The game state used to update fields.
+	 */
 	public void setVariables(Game game)
 	{
 		this.game = game;

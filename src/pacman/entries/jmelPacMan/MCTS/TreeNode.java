@@ -5,13 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import pacman.entries.jmelPacMan.MCTSPacMan.MCTSPacMan;
 import pacman.game.Constants.MOVE;
 import pacman.game.Game;
 
 public class TreeNode
 {
-	public int index;
 	public int visits;
 	public TreeNode parent;
 	public List<TreeNode> children;
@@ -25,13 +23,10 @@ public class TreeNode
 	public double avgSSurvival;
 	public double maxSPill;
 	public double maxSSurvival;
-	public double totSPill;
-	public double totSSurvival;
 	public double uctValue;
 
 	public TreeNode(Game game, TreeNode parent, double pathLength)
 	{
-		index = game.getPacmanCurrentNodeIndex();
 		this.visits = 0;
 		this.parent = parent;
 		this.children = new ArrayList<TreeNode>();
@@ -48,10 +43,8 @@ public class TreeNode
 		this.pathLength = pathLength;
 		this.avgSPill = 0.0;
 		this.maxSPill = 0.0;
-		this.totSPill = 0.0;
 		this.avgSSurvival = 0.0;
 		this.maxSSurvival = 0.0;
-		this.totSSurvival = 0.0;
 	}
 
 	public TreeNode bestChild()
@@ -167,11 +160,6 @@ public class TreeNode
 	public void updateValues(double sPill, double sSurvival)
 	{
 		visits++;
-
-		MCTSPacMan.nodesVisited.put(index, visits);
-
-		totSPill += sPill;
-		totSSurvival += sSurvival;
 
 		double average = (children.size() == 0 ? 1 : children.size());
 
