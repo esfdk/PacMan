@@ -3,6 +3,13 @@ package pacman.entries.jmelPacMan.NN;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A neuron in a neural network.
+ * 
+ * Based on work by vivin, https://github.com/vivin/DigitRecognizingNeuralNetwork/tree/master/src/main/java/net/vivin/neural
+ * 
+ * @author Jakob Melnyk (jmel)
+ */
 public class Neuron
 {
 	/**
@@ -19,61 +26,113 @@ public class Neuron
 	 */
 	private List<Synapse> inputs;
 
-	private double weightedSum;
+	/**
+	 * The amount of error in the node.
+	 */
 	private double error;
 
+	/**
+	 * Instantiate a new instance of the Neuron class.
+	 */
 	public Neuron()
 	{
 		inputs = new ArrayList<Synapse>();
 		numberOfInputs = 0;
 	}
 
+	/**
+	 * Adds a new input in the form of a Synapse.
+	 * 
+	 * @param s
+	 *            The synapse.
+	 */
 	public void addInput(Synapse s)
 	{
 		inputs.add(s);
 		numberOfInputs++;
 	}
 
-	private void calculateWeightedSum()
+	/**
+	 * Calculates the weighted sum of this neuron.
+	 * 
+	 * @return The weighted sum.
+	 */
+	private double calculateWeightedSum()
 	{
-		weightedSum = 0;
+		double weightedSum = 0;
 		for (Synapse synapse : inputs)
 		{
 			weightedSum += synapse.getWeight() * synapse.getSourceNeuron().getOutput();
 		}
+
+		return weightedSum;
 	}
 
+	/**
+	 * Calculates the output of the neuron.
+	 */
 	public void activate()
 	{
-		calculateWeightedSum();
-		output = sigmoid(weightedSum);
+		output = sigmoid(calculateWeightedSum());
 	}
 
+	/**
+	 * Gets the output of the neuron.
+	 * 
+	 * @return The output.
+	 */
 	public double getOutput()
 	{
 		return this.output;
 	}
 
+	/**
+	 * Sets the output to a new value.
+	 * 
+	 * @param output
+	 *            The new output.
+	 */
 	public void setOutput(double output)
 	{
 		this.output = output;
 	}
 
+	/**
+	 * Gets the error of the neuron.
+	 * 
+	 * @return The error.
+	 */
 	public double getError()
 	{
 		return error;
 	}
 
+	/**
+	 * Sets the error of the neuron to a new value.
+	 * 
+	 * @param error
+	 *            The new error value.
+	 */
 	public void setError(double error)
 	{
 		this.error = error;
 	}
 
+	/**
+	 * Gets the list of input synapses for this neuron.
+	 * 
+	 * @return The list of input synapses.
+	 */
 	public List<Synapse> getInputs()
 	{
 		return this.inputs;
 	}
 
+	/**
+	 * Gets an array of the weights of all the synapses for this neuron.
+	 * 
+	 * @return An array containing the weights.
+	 */
 	public double[] getWeights()
 	{
 		double[] weights = new double[inputs.size()];
@@ -87,13 +146,16 @@ public class Neuron
 
 		return weights;
 	}
-	
+
 	/**
-	 * Calculates the Sigmoid value from input value and response values.
-	 * @param inputValue The input value.
+	 * Calculates the Sigmoid value from an input value.
+	 * 
+	 * @param inputValue
+	 *            The input value.
 	 * @return The resulting Sigmoid value.
 	 */
-	private static double sigmoid(double inputValue) {
+	private static double sigmoid(double inputValue)
+	{
 		return 1.0 / (1.0 + Math.exp(-1.0 * inputValue));
 	}
 }

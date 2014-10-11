@@ -14,15 +14,46 @@ import pacman.game.Constants.MOVE;
 import pacman.game.Game;
 import pacman.game.util.IO;
 
+/**
+ * PacMan controller using a Neural Network.
+ * 
+ * @author Jakob Melnyk (jmel)
+ */
 public class NNPacMan extends Controller<MOVE>
 {
+	/**
+	 * Controls if weights should be loaded when a controller is initialised.
+	 */
 	private boolean loadWeights = true;
-	private boolean loadArray = false;
+
+	/**
+	 * Controls if weights should be loaded from an array or from a file.
+	 */
+	private boolean loadArray = true;
+
+	/**
+	 * The file to load weights from.
+	 */
 	private String fileToLoad = "TrainedNN-2014_10_11_00_31_42_015-5.txt";
 
-	public NeuralNetwork nn;
+	/**
+	 * The neural network used by the controller.
+	 */
+	private NeuralNetwork nn;
+
+	/**
+	 * Number of inputs in the neural network.
+	 */
 	private int numberOfInputs = 13;
+
+	/**
+	 * Number of outputs in the neural network.
+	 */
 	private int numberOfOutputs = 4;
+
+	/**
+	 * Number of hidden nodes in the neural network.
+	 */
 	private int numberOfHiddenNodes = 5;
 
 	/**
@@ -33,11 +64,16 @@ public class NNPacMan extends Controller<MOVE>
 		nn = NeuralNetwork.createSingleHiddenLayerNeuralNetwork(generateNeuralNetworkName(), numberOfInputs, numberOfOutputs,
 				numberOfHiddenNodes);
 		if (loadWeights)
+		{
 			nn.setWeights(loadWeights());
+		}
 	}
 
 	/**
 	 * Instantiates a new PacManController using a NeuralNetwork.
+	 * 
+	 * @param numberOfHiddenNodes
+	 *            The number of hidden nodes in the neural network used by the controller.
 	 */
 	private NNPacMan(int numberOfHiddenNodes)
 	{
@@ -46,9 +82,16 @@ public class NNPacMan extends Controller<MOVE>
 		nn = NeuralNetwork.createSingleHiddenLayerNeuralNetwork(generateNeuralNetworkName(), numberOfInputs, numberOfOutputs,
 				this.numberOfHiddenNodes);
 		if (loadWeights)
+		{
 			nn.setWeights(loadWeights());
+		}
 	}
 
+	/**
+	 * Generates a name for the neural network using the current time and the number of hidden nodes.
+	 * 
+	 * @return The name for the neural network.
+	 */
 	private String generateNeuralNetworkName()
 	{
 		Calendar cal = Calendar.getInstance();
@@ -57,7 +100,7 @@ public class NNPacMan extends Controller<MOVE>
 	}
 
 	/**
-	 * Instantiates a new PacManController using a NeuralNetwork.
+	 * Instantiates a new PacManController using a NeuralNetwork and trains it.
 	 */
 	public static NNPacMan newController()
 	{
@@ -73,7 +116,7 @@ public class NNPacMan extends Controller<MOVE>
 	}
 
 	/**
-	 * Instantiates a new PacManController using a NeuralNetwork.
+	 * Instantiates a new PacManController using a NeuralNetwork and trains it.
 	 * 
 	 * @param hiddenNodeNumber
 	 *            Number of hidden nodes in the network hidden layer of the network
@@ -144,6 +187,9 @@ public class NNPacMan extends Controller<MOVE>
 		return chosenMove;
 	}
 
+	/**
+	 * Trains the neural network.
+	 */
 	private void trainNetwork()
 	{
 		TrainingSet ts = getTrainingSet();
@@ -152,12 +198,35 @@ public class NNPacMan extends Controller<MOVE>
 		b.train(ts);
 	}
 
+	/**
+	 * Loads weights from an already trained network (either from file or from array.
+	 * 
+	 * @return The weights to use in the neural network.
+	 */
 	private double[] loadWeights()
 	{
 		if (loadArray)
 		{
 			double[] weights =
-			{};
+			{ -22.326947319947188, -32.692208149219454, 7.926781696708609, 39.44838965941962, -132.72289963979628,
+					124.7387360465321, -17.977532882745585, -8.23544211610317, -24.58584617051054, -20.645050977302883,
+					-51.35459144902418, 40.822432929262185, 41.657619897275595, -68.1431707304308, 13.083880634732942,
+					1.1504420618645466, -13.992558482163414, -26.090779557615928, -4.375601586821584, -13.476540496271861,
+					-0.9097559971652787, -0.2850592577831624, 0.9432418202032539, 1.6471543460000617, 5.258368355748813,
+					13.98359541953976, -18.492660107390385, 5.091605661282135, 51.00976041998503, -98.97589401611519,
+					1.5321161304424824, -84.39082818608102, 162.40839838039162, 28.021045048995436, -34.69757701063767,
+					-16.03839007709612, 31.018393502298924, 43.08601901127519, -36.72072829784158, -27.651848069520938,
+					-34.44826049862651, 27.842114458078242, 75.51479605872191, -4.38069087018132, -7.811440434138965,
+					-168.8847463819836, 68.0567135263223, -13.252959584217237, -15.938909745075684, 0.6052693744386902,
+					-3.6270494056631493, 16.152700912790944, -19.767340196396283, 2.3153334774020164, -48.68645036464228,
+					69.15208343056598, -31.968774675903827, -94.44752356611195, 14.749047060770048, 93.18041502230089,
+					107.61090064261576, 60.952777619981575, -20.023713363760578, 51.4397804441901, -0.4267688370451119,
+					4.511422246896552, 49.60681963994369, 34.455543210932284, 41.78942744190147, 3.7739576463095665,
+					-0.5879714288842386, 1.7174195242652255, -2.7674486943962866, -2.10276845540951, 1.0387279716288935,
+					2.0403739994059413, -0.32346551132723933, -1.9389719532346636, 0.4400819309993993, 0.4439108619284558,
+					-0.5246464571996015, 0.11732905908455366, -1.7120954962914807, -0.09750396638845384, 1.3494476946214156,
+					1.6444789118890275, -1.0176470398923934, -1.485196109094249, -1.9975625252629976, -0.08409964848495899,
+					0.45884506887566245, -0.22284500385365696, 0.5656879371472907, -0.24336340806151005 };
 			return weights;
 		}
 
@@ -176,7 +245,7 @@ public class NNPacMan extends Controller<MOVE>
 	/**
 	 * Loads the training set from the PacMan data.
 	 * 
-	 * @return
+	 * @return The loaded training set.
 	 */
 	private TrainingSet getTrainingSet()
 	{

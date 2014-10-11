@@ -27,7 +27,17 @@ public class PacManBT extends Controller<MOVE>
 	 */
 	public PacManBT()
 	{
-		context = new PacManContext();
+		this.context = new PacManContext();
+		createBehaviourTree();
+	}
+	
+	/**
+	 * Instantiates a new instance of the jmelBTPacManController class.
+	 * @param pmc The PacManContext used for the controller.
+	 */
+	public PacManBT(PacManContext pmc)
+	{
+		this.context = pmc;
 		createBehaviourTree();
 	}
 

@@ -2,13 +2,31 @@ package pacman.entries.jmelPacMan.NNPacMan;
 
 import pacman.entries.jmelPacMan.NN.Training.TrainingData;
 import pacman.entries.jmelPacMan.dataRecording.DataTuple;
-import pacman.game.Constants.MOVE;
 
+/**
+ * Training data specific to the PacMan neural network controller.
+ * 
+ * @author Jakob Melnyk (jmel)
+ */
 public class PacManTrainingData extends TrainingData
 {
+	/**
+	 * The minimum value of a variable.
+	 */
 	private static final double MIN_VALUE = 0.0;
+
+	/**
+	 * The maximum value of a variable.
+	 */
 	private static final double MAX_VALUE = 1.0;
 
+	/**
+	 * Instantiates a new instance of the PacManTrainingData class.
+	 * 
+	 * @param dt The data tuple used to instantiate the PacManTrainingData.
+	 * @param inputNodes The number of input nodes in the 
+	 * @param outputNodes
+	 */
 	public PacManTrainingData(DataTuple dt, int inputNodes, int outputNodes)
 	{
 		super(inputNodes, outputNodes);
@@ -34,17 +52,22 @@ public class PacManTrainingData extends TrainingData
 			output[4] = MAX_VALUE;
 			break;
 		}
-		
+
 		fillInputArrayFromDataTuple(input, dt);
 	}
 
+	/**
+	 * Fills an array with data from a data tuple.
+	 * 
+	 * @param input
+	 *            The array to fill.
+	 * @param dt
+	 *            The data to extract data from.
+	 */
 	public static void fillInputArrayFromDataTuple(double[] input, DataTuple dt)
 	{
 		input[0] = dt.normalizeLevel(dt.mazeIndex);
-//		input[1] = dt.normalizeLevel(dt.currentLevel);
 		input[1] = dt.normalizePosition(dt.pacmanPosition);
-//		input[3] = dt.normalizeCurrentScore(dt.currentScore);
-//		input[4] = dt.normalizeTotalGameTime(dt.totalGameTime);
 		input[2] = dt.normalizeCurrentLevelTime(dt.currentLevelTime);
 		input[3] = dt.normalizeNumberOfPills(dt.numOfPillsLeft);
 		input[4] = dt.normalizeNumberOfPowerPills(dt.numOfPowerPillsLeft);
@@ -58,121 +81,5 @@ public class PacManTrainingData extends TrainingData
 		input[10] = dt.normalizeDistance(dt.inkyDist);
 		input[11] = dt.normalizeDistance(dt.pinkyDist);
 		input[12] = dt.normalizeDistance(dt.sueDist);
-		// Ghost direction
-//		for(int ghostDirectionInputs = 16; ghostDirectionInputs <= 31; ghostDirectionInputs++)
-//		{
-//			input[ghostDirectionInputs] = 0.0;
-//		}
-//
-//		switch (dt.blinkyDir)
-//		{
-//				case UP:
-//					input[16] = MAX_VALUE;
-//					break;
-//				case RIGHT:
-//					input[17] = MAX_VALUE;
-//					break;
-//				case DOWN:
-//					input[18] = MAX_VALUE;
-//					break;
-//				case LEFT:
-//					input[19] = MAX_VALUE;
-//					break;
-//				default:
-//					break;
-//		}
-//		switch (dt.inkyDir)
-//		{
-//				case UP:
-//					input[20] = MAX_VALUE;
-//					break;
-//				case RIGHT:
-//					input[21] = MAX_VALUE;
-//					break;
-//				case DOWN:
-//					input[22] = MAX_VALUE;
-//					break;
-//				case LEFT:
-//					input[23] = MAX_VALUE;
-//					break;
-//				default:
-//					break;
-//		}switch (dt.pinkyDir)
-//		{
-//				case UP:
-//					input[24] = MAX_VALUE;
-//					break;
-//				case RIGHT:
-//					input[25] = MAX_VALUE;
-//					break;
-//				case DOWN:
-//					input[26] = MAX_VALUE;
-//					break;
-//				case LEFT:
-//					input[27] = MAX_VALUE;
-//					break;
-//				default:
-//					break;
-//		}switch (dt.sueDir)
-//		{
-//				case UP:
-//					input[28] = MAX_VALUE;
-//					break;
-//				case RIGHT:
-//					input[29] = MAX_VALUE;
-//					break;
-//				case DOWN:
-//					input[30] = MAX_VALUE;
-//					break;
-//				case LEFT:
-//					input[31] = MAX_VALUE;
-//					break;
-//				default:
-//					break;
-//		}
-	}
-	
-	public static double moveToDouble(MOVE move)
-	{
-		switch (move)
-		{
-		case NEUTRAL:
-			return 0.00;
-		case UP:
-			return 0.25;
-		case RIGHT:
-			return 0.5;
-		case DOWN:
-			return 0.75;
-		case LEFT:
-			return 1.0;
-		default:
-			return -1.0;
-		}
-	}
-
-	public static MOVE doubleToMove(double d)
-	{
-		if (d >= -0.13 && d < 0.12)
-		{
-			return MOVE.NEUTRAL;
-		}
-		if (d >= 0.12 && d < 0.37)
-		{
-			return MOVE.UP;
-		}
-		if (d >= 0.37 && d < 0.62)
-		{
-			return MOVE.RIGHT;
-		}
-		if (d >= 0.62 && d < 0.87)
-		{
-			return MOVE.DOWN;
-		}
-		if (d >= 0.87 && d < 1.12)
-		{
-			return MOVE.LEFT;
-		}
-		return MOVE.NEUTRAL;
 	}
 }

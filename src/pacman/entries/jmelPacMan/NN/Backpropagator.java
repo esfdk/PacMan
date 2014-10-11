@@ -5,23 +5,87 @@ import java.util.List;
 import pacman.entries.jmelPacMan.NN.Training.TrainingData;
 import pacman.entries.jmelPacMan.NN.Training.TrainingSet;
 
+/**
+ * Used for the backpropagation algorithm for neural networks.
+ * 
+ * @author Jakob Melnyk (jmel)
+ */
 public class Backpropagator
 {
-	private NeuralNetwork neuralNetwork; // Neural network to train
-	private int samples = 25; // Number of samples to average errors over.
+	/**
+	 * The neural network to train.
+	 */
+	private NeuralNetwork neuralNetwork;
+
+	/**
+	 * Amount of samples to average over.
+	 */
+	private int samples = 25;
+
+	/**
+	 * The current learning rate of the algorithm.
+	 */
 	private double learningRate = 0.0;
-	private double startingLearningRate = 1.0; // Starting learning rate for the backpropagation algorithm
-	private double errorThreshold = 0.05; // Learning stops after average error is below this value.
-	private int maximumEpochs = 1000; // Maximum number of epochs to train on.
-	private int epochsPerIteration = 25; // Amount of epochs per learning iteration.
-	private double maxWeightChange = 0.0001; // Maximum amount of change in a single weight during training.
+
+	/**
+	 * The starting learning rate of the algorithm.
+	 */
+	private double startingLearningRate = 1.0;
+
+	/**
+	 * The error threshold for the backpropagation algorithm. Learning stops after average error is below this value.
+	 */
+	private double errorThreshold = 0.05;
+
+	/**
+	 * The maximum number of epochs to train.
+	 */
+	private int maximumEpochs = 1000;
+
+	/**
+	 * The amounts of epochs per learning iteration (how often learning rate is reduced).
+	 */
+	private int epochsPerIteration = 25;
+
+	/**
+	 * The maximum amount of change in a single weight in an epoch.
+	 */
+	private double maxWeightChange = 0.0001;
+
+	/**
+	 * The maximum percentage of tuples that can be misclassified in an epoch for it to terminate.
+	 */
 	private double maximumMisclassificationPercentage = 0.05; // Maximum amount of misclassified tuples allowed in an epoch.
 
+	/**
+	 * Instantiates a new instance of the Backpropagator class.
+	 * 
+	 * @param nn
+	 *            The neural network to backpropagate.
+	 */
 	public Backpropagator(NeuralNetwork nn)
 	{
 		this.neuralNetwork = nn;
 	}
 
+	/**
+	 * Instantiates a new instance of the Backpropagator class.
+	 * 
+	 * @param nn
+	 *            The neural network to backpropagate.
+	 * @param startingLearningRate
+	 *            The starting learning rate.
+	 * @param errorThreshold
+	 *            The error threshold.
+	 * @param maxEpochs
+	 *            The maximum amount of epochs.
+	 * @param epochsPerIteration
+	 *            The amount of epochs per iteration.
+	 * @param maxWeightChange
+	 *            The maximum change in a single weight in an epoch.
+	 * @param maxMisclassificationPercentage
+	 *            The percentage of tuples that can be misclassified in an epoch.
+	 */
 	public Backpropagator(NeuralNetwork nn, double startingLearningRate, double errorThreshold, int maxEpochs,
 			int epochsPerIteration, double maxWeightChange, double maxMisclassificationPercentage)
 	{
@@ -34,56 +98,71 @@ public class Backpropagator
 		this.maximumMisclassificationPercentage = maxMisclassificationPercentage;
 	}
 
+	/**
+	 * Train the neural network using backpropagation of the specified training set.
+	 * 
+	 * @param ts
+	 *            The training set to train on.
+	 */
 	public void train(TrainingSet ts)
 	{
-		learningRate = startingLearningRate; // Initialize learning rate
+		// Initialise learning rate.
+		learningRate = startingLearningRate;
 
-		int epoch = 1; // Current epoch
+		// Current epoch.
+		int epoch = 1;
 
-		int learningIteration = 1; // Current learning iteration
+		// Current learning iteration.
+		int learningIteration = 1;
 
-		// Terminating condition variables
+		// Terminating condition variables.
 		TerminatingConditions tc;
 
-		// Average error variables
-		double errorSumOfSamples = 0.0;
-		double epochAverageError = (double) samples;
+		// Average error variables.
+		double errorSum = 0.0;
+		double epochErrorAverage = (double) samples;
 		double[] errors = new double[samples];
 
+		// Do backpropagation until terminating conditions are met.
 		do
 		{
-			// Back propagate
+			// Backpropagate the training data.
 			tc = backpropagate(ts);
 
-			// Remove previous sample from error sum
-			errorSumOfSamples -= (errors[epoch % samples]);
-			// Update sample value with new error value
+			// Remove previous sample and add new one.
+			errorSum -= (errors[epoch % samples]);
 			errors[epoch % samples] = tc.errorSum;
-			// Add new sample to error sum
-			errorSumOfSamples += (errors[epoch % samples]);
+			errorSum += (errors[epoch % samples]);
 
-			// If enough samples have been collected, start calculating average.
+			// Once enough samples have been collected, start calculating average error in epoch.
 			if (epoch > samples)
 			{
-				epochAverageError = errorSumOfSamples / samples;
+				epochErrorAverage = errorSum / samples;
 			}
 
-			// Increase epoch
+			// Increase epoch counter.
 			epoch++;
 
-			// If enough epochs have passed, decrease learning rate.
+			// Once enough epochs have passed, increase learning rate.
 			if (epoch % epochsPerIteration == 0)
 			{
 				learningIteration++;
 				learningRate = startingLearningRate / learningIteration;
 			}
 		} while (epoch < maximumEpochs // Continue training until maximum epochs have passed
-				&& epochAverageError > errorThreshold // or average error is less than or equal to error threshold
+				&& epochErrorAverage > errorThreshold // or average error is less than or equal to error threshold
 				&& tc.maxChange > maxWeightChange // or maximum change in weights is less than or equal to threshold
 				&& tc.percentMisclassifiedTuples > maximumMisclassificationPercentage); // or percentage of misclassified tuples
 																						// is below or equal to threshold
 	}
 
+	/**
+	 * Backpropagates errors in the neural network, using said errors to change weights.
+	 * 
+	 * @param ts
+	 *            The training set to use for backpropagation.
+	 * @return The terminating conditions for this run.
+	 */
 	private TerminatingConditions backpropagate(TrainingSet ts)
 	{
 		double error = 0;
@@ -95,31 +174,38 @@ public class Backpropagator
 			TrainingData td = ts.getSpecificData(i);
 			boolean misclassified = false;
 
-			// Propagate the inputs forward
+			// Propagate the inputs forward.
 			neuralNetwork.setInputs(td.getInput());
 			neuralNetwork.feedForward();
 
-			// Backpropagate the errors
+			// Backpropagate the errors.
 			List<NeuronLayer> neuronLayers = neuralNetwork.getLayers();
 			int numberOfLayers = neuronLayers.size();
 
-			// Calculate errors in output layer
+			// Calculate errors in output layer.
 			NeuronLayer outputLayer = neuronLayers.get(numberOfLayers - 1);
 			for (int j = 0; j < outputLayer.getNeurons().size(); j++)
 			{
 				Neuron n = outputLayer.getNeurons().get(j);
 				double output = n.getOutput();
 
+				// Check if output is misclassified.
 				if (!misclassified)
+				{
 					if (n.getOutput() != td.getOutput()[j])
+					{
 						misclassified = true;
+					}
+				}
 
+				// Set error of the output node.
 				double err = output * (1 - output) * (td.getOutput()[j] - output);
 				n.setError(err);
 
 				List<Synapse> synapses = n.getInputs();
 				int bias = outputLayer.getPreviousLayer().hasBias() ? 1 : 0;
 
+				// Change weight of the synapses connected to the bias, if any.
 				if (bias == 1)
 				{
 					Synapse s = synapses.get(0);
@@ -128,17 +214,21 @@ public class Backpropagator
 					s.setWeight(s.getWeight() + deltaWeight);
 				}
 
+				// Change error and weights from previous layer
 				for (int sIndex = bias; sIndex < synapses.size(); sIndex++)
 				{
 					Synapse s = synapses.get(sIndex);
 					Neuron sn = s.getSourceNeuron();
+					// Increase error of the source neuron.
 					double snErrIncrease = s.getWeight() * n.getError();
 					double snErr = sn.getError() + snErrIncrease;
 					sn.setError(snErr);
 
+					// Change weight based on error of current neuron.
 					double deltaWeight = learningRate * n.getError() * sn.getOutput();
 					s.setWeight(s.getWeight() + deltaWeight);
 
+					// Keep track of the maximum weight change.
 					if (maxChange < Math.abs(deltaWeight))
 					{
 						maxChange = Math.abs(deltaWeight);
@@ -156,12 +246,14 @@ public class Backpropagator
 					Neuron n = tempLayer.getNeurons().get(j);
 					double output = n.getOutput();
 
+					// Set error of neuron.
 					double err = output * (1 - output) * (n.getError());
 					n.setError(err);
 
 					List<Synapse> synapses = n.getInputs();
 					int previousLayerBias = tempLayer.getPreviousLayer().hasBias() ? 1 : 0;
 
+					// Change weight of bias neuron, if any.
 					if (previousLayerBias == 1)
 					{
 						Synapse s = synapses.get(0);
@@ -170,16 +262,22 @@ public class Backpropagator
 						s.setWeight(s.getWeight() + deltaWeight);
 					}
 
+					// Change error and weights from previous layer.
 					for (int sIndex = previousLayerBias; sIndex < synapses.size(); sIndex++)
 					{
 						Synapse s = synapses.get(sIndex);
 						Neuron sn = s.getSourceNeuron();
+
+						// Increase error of source neruon.
 						double snErrIncrease = s.getWeight() * n.getError();
 						double snErr = sn.getError() + snErrIncrease;
 						sn.setError(snErr);
 
+						// Change weight based on error of current neuron.
 						double deltaWeight = learningRate * n.getError() * sn.getOutput();
 						s.setWeight(s.getWeight() + deltaWeight);
+
+						// Keep track of the maximum weight change.
 						if (maxChange < Math.abs(deltaWeight))
 						{
 							maxChange = Math.abs(deltaWeight);
@@ -188,37 +286,63 @@ public class Backpropagator
 				}
 			}
 
+			// Increase error sum.
 			double[] output = neuralNetwork.getOutput();
 			error += sumError(output, td.getOutput());
+
+			// If tuple was misclassified, increase counter.
 			if (misclassified)
+			{
 				misclassifiedTuples++;
+			}
 		}
 
+		// Record terminating condition values and return them
 		TerminatingConditions tc = new TerminatingConditions();
-
 		tc.errorSum = Math.abs(error);
 		tc.percentMisclassifiedTuples = misclassifiedTuples / (((double) ts.highestIndexOfSet() + 1));
 		tc.maxChange = maxChange;
-
 		return tc;
 	}
 
+	/**
+	 * Sums the error of an actual output compared to an expected output.
+	 * 
+	 * @param actual The actual output.
+	 * @param expected The expected output.
+	 * @return The error sum.
+	 */
 	private double sumError(double[] actual, double[] expected)
 	{
-		if (actual.length != expected.length)
-			throw new IllegalArgumentException("The lengths of the actual and expected value arrays must be equal");
-
 		double sum = 0;
 		for (int i = 0; i < expected.length; i++)
+		{
 			sum += Math.abs(expected[i] - actual[i]);
+		}
 
 		return sum;
 	}
 
+	/**
+	 * Values for the terminating conditions using in back propagation.
+	 * 
+	 * @author Jakob Melnyk (jmel)
+	 */
 	private class TerminatingConditions
 	{
+		/**
+		 * The sum of all errors in an epoch.
+		 */
 		public double errorSum;
+
+		/**
+		 * The percentage of misclassified tuples in an epoch.
+		 */
 		public double percentMisclassifiedTuples;
+
+		/**
+		 * The maximum change in a single weight in an epoch.
+		 */
 		public double maxChange;
 	}
 }

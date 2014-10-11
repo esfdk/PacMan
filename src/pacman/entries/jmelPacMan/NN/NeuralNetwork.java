@@ -3,21 +3,60 @@ package pacman.entries.jmelPacMan.NN;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * An artificial neural network.
+ * 
+ * Based on work by vivin, https://github.com/vivin/DigitRecognizingNeuralNetwork/tree/master/src/main/java/net/vivin/neural
+ * 
+ * @author Jakob Melnyk (jmel)
+ */
 public class NeuralNetwork
 {
-
+	/**
+	 * The name of the neural network.
+	 */
 	private String name;
 
+	/**
+	 * The layers of the neural network.
+	 */
 	private List<NeuronLayer> layers;
+
+	/**
+	 * The input layer of the network.
+	 */
 	private NeuronLayer input;
+
+	/**
+	 * The output layer of the network.
+	 */
 	private NeuronLayer output;
 
+	/**
+	 * Instantiates a new instance of the NeuralNetwork class.
+	 * 
+	 * @param name
+	 *            The name of the network.
+	 */
 	public NeuralNetwork(String name)
 	{
 		layers = new ArrayList<NeuronLayer>();
 		this.name = name;
 	}
 
+	/**
+	 * Creates a new neural network with a single hidden layer.
+	 * 
+	 * @param name
+	 *            The name of the neural network.
+	 * @param numberOfInputNodes
+	 *            The amount of input nodes.
+	 * @param numberOfOutputNodes
+	 *            The amount of output nodes.
+	 * @param numberOfHiddenNodes
+	 *            The amount of hidden nodes in the hidden layer.
+	 * @return The created neural network.
+	 */
 	public static NeuralNetwork createSingleHiddenLayerNeuralNetwork(String name, int numberOfInputNodes,
 			int numberOfOutputNodes, int numberOfHiddenNodes)
 	{
@@ -55,6 +94,12 @@ public class NeuralNetwork
 		return nn;
 	}
 
+	/**
+	 * Adds a layer to the neural network.
+	 * 
+	 * @param layer
+	 *            The layer to add.
+	 */
 	public void addLayer(NeuronLayer layer)
 	{
 		layers.add(layer);
@@ -66,8 +111,8 @@ public class NeuralNetwork
 
 		if (layers.size() > 1)
 		{
-			// clear the output flag on the previous output layer, but only if
-			// we have more than 1 layer
+			// if there is more than a single layer in the network,
+			// clear the output status of the previous output layer
 			NeuronLayer previousLayer = layers.get(layers.size() - 2);
 			previousLayer.setNextLayer(layer);
 		}
@@ -75,29 +120,30 @@ public class NeuralNetwork
 		output = layers.get(layers.size() - 1);
 	}
 
+	/**
+	 * Sets the weights of the neural network.
+	 * 
+	 * @param inputs
+	 *            The new inputs.
+	 */
 	public void setInputs(double[] inputs)
 	{
 		if (input != null)
 		{
-
 			int biasCount = input.hasBias() ? 1 : 0;
-
-			if (input.getNeurons().size() - biasCount != inputs.length)
+			List<Neuron> neurons = input.getNeurons();
+			for (int i = biasCount; i < neurons.size(); i++)
 			{
-				throw new IllegalArgumentException("The number of inputs must equal the number of neurons in the input layer");
-			}
-
-			else
-			{
-				List<Neuron> neurons = input.getNeurons();
-				for (int i = biasCount; i < neurons.size(); i++)
-				{
-					neurons.get(i).setOutput(inputs[i - biasCount]);
-				}
+				neurons.get(i).setOutput(inputs[i - biasCount]);
 			}
 		}
 	}
 
+	/**
+	 * Gets the values of the output nodes of the network.
+	 * 
+	 * @return The output values.
+	 */
 	public double[] getOutput()
 	{
 		double[] outputs = new double[output.getNeurons().size()];
@@ -112,6 +158,9 @@ public class NeuralNetwork
 		return outputs;
 	}
 
+	/**
+	 * Makes every layer in the neural network feed forward.
+	 */
 	public void feedForward()
 	{
 		for (int i = 1; i < layers.size(); i++)
@@ -121,22 +170,29 @@ public class NeuralNetwork
 		}
 	}
 
+	/**
+	 * Gets the layers of the network.
+	 * 
+	 * @return A list of the layers.
+	 */
 	public List<NeuronLayer> getLayers()
 	{
 		return layers;
 	}
 
+	/**
+	 * Gets the weights of the neural network.
+	 * 
+	 * @return The weights.
+	 */
 	public double[] getWeights()
 	{
-
 		List<Double> weights = new ArrayList<Double>();
 
 		for (NeuronLayer layer : layers)
 		{
-
 			for (Neuron neuron : layer.getNeurons())
 			{
-
 				for (Synapse synapse : neuron.getInputs())
 				{
 					weights.add(synapse.getWeight());
@@ -156,6 +212,11 @@ public class NeuralNetwork
 		return allWeights;
 	}
 
+	/**
+	 * Sets the weights of the synapses in the network.
+	 * @param weights
+	 *            The new weights.
+	 */
 	public void setWeights(double[] weights)
 	{
 		int w = 0;
@@ -175,6 +236,11 @@ public class NeuralNetwork
 		}
 	}
 
+	/**
+	 * Gets the name of the neural network.
+	 * 
+	 * @return The name of the network.
+	 */
 	public String getName()
 	{
 		return this.name;
