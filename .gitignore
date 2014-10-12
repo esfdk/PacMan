@@ -47,4 +47,5 @@ local.properties
 *.synctex.gz
 *.pdf
 *.log
+*.bbl
 *.blg
