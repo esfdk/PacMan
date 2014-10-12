@@ -29,12 +29,12 @@ public class NNPacMan extends Controller<MOVE>
 	/**
 	 * Controls if weights should be loaded from an array or from a file.
 	 */
-	private boolean loadArray = true;
+	private boolean loadArray = false;
 
 	/**
 	 * The file to load weights from.
 	 */
-	private String fileToLoad = "TrainedNN-2014_10_11_00_31_42_015-5.txt";
+	private String fileToLoad = "TrainedNN-2014_10_12_18_25_36_512-5.txt";
 
 	/**
 	 * The neural network used by the controller.
@@ -44,7 +44,7 @@ public class NNPacMan extends Controller<MOVE>
 	/**
 	 * Number of inputs in the neural network.
 	 */
-	private int numberOfInputs = 13;
+	private int numberOfInputs = 2;
 
 	/**
 	 * Number of outputs in the neural network.
@@ -177,12 +177,6 @@ public class NNPacMan extends Controller<MOVE>
 				}
 			}
 		}
-
-		System.out.println();
-		double[] results = nn.getOutput();
-		for (double d : results)
-			System.out.print(d + " ||| ");
-		System.out.print(chosenMove.toString());
 
 		return chosenMove;
 	}

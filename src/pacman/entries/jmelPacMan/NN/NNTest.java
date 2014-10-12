@@ -23,12 +23,15 @@ public class NNTest
 	 */
 	public static void main(String[] args)
 	{
-		pacManNetwork();
+//		pacManNetwork();
+		AND();
+//		XOR();
 	}
 
 	/**
 	 * Trains a new controller.
 	 */
+	@SuppressWarnings("unused")
 	private static void pacManNetwork()
 	{
 		NNPacMan.newController(5);
@@ -70,7 +73,7 @@ public class NNTest
 		ts.AddTrainingData(td3);
 		ts.AddTrainingData(td4);
 
-		Backpropagator bp = new Backpropagator(nn);
+		Backpropagator bp = new Backpropagator(nn, 1.0, 0.005, Integer.MAX_VALUE, Integer.MAX_VALUE / 4000, 0.001, 0.05);
 		bp.train(ts);
 
 		nn.setInputs(in1);
@@ -130,7 +133,7 @@ public class NNTest
 		ts.AddTrainingData(td3);
 		ts.AddTrainingData(td4);
 
-		Backpropagator bp = new Backpropagator(nn);
+		Backpropagator bp = new Backpropagator(nn, 1.0, 0.005, Integer.MAX_VALUE, Integer.MAX_VALUE / 4000, 0.001, 0.05);
 		bp.train(ts);
 
 		nn.setInputs(in1);
@@ -155,7 +158,7 @@ public class NNTest
 	}
 	
 	/**
-	 * Creates a neural network with 2 inputs and 1 output.
+	 * Creates a neural network with 2 inputs, 2 hidden nodes and 1 output.
 	 * @param name The name of the neural network.
 	 * @return The newly created neural network.
 	 */

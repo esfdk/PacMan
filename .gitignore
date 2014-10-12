@@ -41,3 +41,10 @@ local.properties
 .classpath
 .settings/
 .loadpath
+
+
+*.aux
+*.synctex.gz
+*.pdf
+*.log
+*.blg

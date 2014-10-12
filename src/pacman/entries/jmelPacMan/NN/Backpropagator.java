@@ -50,12 +50,12 @@ public class Backpropagator
 	/**
 	 * The maximum amount of change in a single weight in an epoch.
 	 */
-	private double maxWeightChange = 0.0001;
+	private double maxWeightChange = 0.01;
 
 	/**
 	 * The maximum percentage of tuples that can be misclassified in an epoch for it to terminate.
 	 */
-	private double maximumMisclassificationPercentage = 0.05; // Maximum amount of misclassified tuples allowed in an epoch.
+	private double maximumMisclassificationPercentage = 0.05;
 
 	/**
 	 * Instantiates a new instance of the Backpropagator class.
@@ -91,8 +91,8 @@ public class Backpropagator
 	{
 		this(nn);
 		this.startingLearningRate = startingLearningRate;
-		this.maximumEpochs = maxEpochs;
 		this.errorThreshold = errorThreshold;
+		this.maximumEpochs = maxEpochs;
 		this.epochsPerIteration = epochsPerIteration;
 		this.maxWeightChange = maxWeightChange;
 		this.maximumMisclassificationPercentage = maxMisclassificationPercentage;
@@ -192,7 +192,7 @@ public class Backpropagator
 				// Check if output is misclassified.
 				if (!misclassified)
 				{
-					if (n.getOutput() != td.getOutput()[j])
+					if(Math.abs(n.getOutput() - td.getOutput()[j]) > 0.0001)
 					{
 						misclassified = true;
 					}

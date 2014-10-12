@@ -55,13 +55,13 @@ public class Executor
 		Controller<MOVE> pmc4 = new HumanController(new KeyBoardInput());
 		
 		//run multiple games in batch mode - good for testing.
-		int numTrials=100;
-		exec.runExperiment(pmc2,new StarterGhosts(),numTrials);
+//		int numTrials=100;
+//		exec.runExperiment(pmc3,new StarterGhosts(),numTrials);
 		
 		//run a game in synchronous mode: game waits until controllers respond.
-//		int delay=10;
-//		boolean visual=true;
-//		exec.runGame(pmc1,new Legacy2TheReckoning(),visual,delay);
+		int delay=10;
+		boolean visual=true;
+		exec.runGame(pmc3,new Legacy2TheReckoning(),visual,delay);
   		
 		
 		///*
@@ -115,11 +115,11 @@ public class Executor
 			}
 			
 			avgScore+=game.getScore();
-//			System.out.println(i+"\t"+game.getScore());
+			System.out.println(i+"\t"+game.getScore());
 		}
 		
-//		System.out.println(avgScore/trials);
-//		System.out.println(avgScore + " & " + trials + " & " + avgScore/trials);
+		System.out.println(avgScore/trials);
+		System.out.println(avgScore + " & " + trials + " & " + avgScore/trials);
 		return avgScore/trials;
     }
 	

@@ -1,0 +1,32 @@
+\begin{thebibliography}{4}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Risi(2014{\natexlab{a}})]{lecture6}
+Sebastian Risi.
+\newblock Lecture 6: Neural networks and backpropagation.
+\newblock Course on Modern AI in Games at IT-University of Copenhagen,
+  September 2014{\natexlab{a}}.
+
+\bibitem[Ross(1999)]{ross1999}
+Peter Ross.
+\newblock Neural networks: an introduction.
+\newblock 1999.
+
+\bibitem[Han et~al.(2011)Han, Kamber, and Pei]{Han:2011:DMC:1972541}
+Jiawei Han, Micheline Kamber, and Jian Pei.
+\newblock \emph{Data Mining: Concepts and Techniques}.
+\newblock Morgan Kaufmann Publishers Inc., San Francisco, CA, USA, 3rd edition,
+  2011.
+\newblock ISBN 0123814790, 9780123814791.
+
+\bibitem[Risi(2014{\natexlab{b}})]{competition}
+Viktor Risi, Sebastian;~Chudinov.
+\newblock "the hunger game".
+\newblock Course on Modern AI in Games at IT-University of Copenhagen,
+  September 2014{\natexlab{b}}.
+
+\end{thebibliography}

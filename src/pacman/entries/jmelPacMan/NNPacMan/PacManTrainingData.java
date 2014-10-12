@@ -66,20 +66,7 @@ public class PacManTrainingData extends TrainingData
 	 */
 	public static void fillInputArrayFromDataTuple(double[] input, DataTuple dt)
 	{
-		input[0] = dt.normalizeLevel(dt.mazeIndex);
-		input[1] = dt.normalizePosition(dt.pacmanPosition);
-		input[2] = dt.normalizeCurrentLevelTime(dt.currentLevelTime);
-		input[3] = dt.normalizeNumberOfPills(dt.numOfPillsLeft);
-		input[4] = dt.normalizeNumberOfPowerPills(dt.numOfPowerPillsLeft);
-		// Ghosts edible?
-		input[5] = dt.normalizeBoolean(dt.isBlinkyEdible);
-		input[6] = dt.normalizeBoolean(dt.isInkyEdible);
-		input[7] = dt.normalizeBoolean(dt.isPinkyEdible);
-		input[8] = dt.normalizeBoolean(dt.isSueEdible);
-		// Ghost distance
-		input[9] = dt.normalizeDistance(dt.blinkyDist);
-		input[10] = dt.normalizeDistance(dt.inkyDist);
-		input[11] = dt.normalizeDistance(dt.pinkyDist);
-		input[12] = dt.normalizeDistance(dt.sueDist);
+		input[0] = dt.normalizePosition(dt.pacmanPosition);
+		input[1] = dt.normalizeCurrentLevelTime(dt.currentLevelTime);
 	}
 }

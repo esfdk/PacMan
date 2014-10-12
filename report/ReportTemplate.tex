@@ -1,5 +1,5 @@
 \documentclass[conference]{IEEEtran}
-
+\usepackage[numbers]{natbib}
 % Add and required packages here
 \usepackage{graphicx,times,amsmath}
 
@@ -19,18 +19,26 @@
 \begin{document}
 
 % Project title: keep the \ \\ \LARGE\bf in it to leave enough margin.
-\title{\ \\ \LARGE\bf Title of your Report}
+\title{\ \\ \LARGE\bf Controllers for Ms. PacMan}
 
 \author{Jakob Melnyk}
 
 % Make the title area
 \maketitle
 
-\input{Parts/Abstract.tex}
+%\input{Parts/Abstract.tex}
 
-\input{Parts/Introduction.tex}
+%\input{Parts/Introduction.tex}
 
-\input{Parts/Results.tex}
+\input{Parts/Approaches.tex}
 
-\input{Parts/Conclusions.tex}
+\input{Parts/PerformanceMeasure.tex}
+
+%\input{Parts/Results.tex}
+
+%\input{Parts/Conclusions.tex}
+
+\bibliographystyle{unsrtnat}
+\bibliography{References}
+
 \end{document}
