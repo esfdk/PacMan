@@ -2,7 +2,6 @@ package pacman.controllers;
 
 import java.awt.event.KeyEvent;
 
-import pacman.entries.jmelPacMan.MCTS.MCTS;
 import pacman.game.Game;
 import pacman.game.Constants.MOVE;
 
@@ -25,10 +24,7 @@ public class HumanController extends Controller<MOVE>
 
 	public MOVE getMove(Game game, long dueTime)
 	{
-		if (MCTS.pacManAtJunction(game))
-		{
-			System.out.println("PACMAN AT JUNCTION!");
-		}
+	
 
 		switch (input.getKey())
 		{

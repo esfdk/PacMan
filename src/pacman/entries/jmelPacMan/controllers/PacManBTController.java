@@ -16,12 +16,12 @@ public class PacManBTController extends Controller<MOVE>
 	/**
 	 * The root behaviour of the behaviour tree. 
 	 */
-	private RootBehaviour treeRoot;
+	protected RootBehaviour treeRoot;
 
 	/**
 	 * The context used in the behaviour tree.
 	 */
-	private PacManContext context;
+	protected PacManContext context;
 	
 	/**
 	 * Instantiates a new instance of the jmelBTPacManController class.
@@ -45,13 +45,13 @@ public class PacManBTController extends Controller<MOVE>
 	/**
 	 * Creates the behaviour tree.
 	 */
-	private void createBehaviourTree()
+	protected void createBehaviourTree()
 	{
 		Selector root = new Selector();
 		
 		Selector ghostBehaviour = new Selector();
 		ghostBehaviour.addBehaviour(new Flee());
-//		ghostBehaviour.addBehaviour(new EatGhost());
+		ghostBehaviour.addBehaviour(new EatGhost());
 		
 		Sequence pillBehaviour = new Sequence();
 		pillBehaviour.addBehaviour(new FindPossibleTargets());

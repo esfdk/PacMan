@@ -23,11 +23,7 @@ import pacman.controllers.examples.RandomNonRevPacMan;
 import pacman.controllers.examples.RandomPacMan;
 import pacman.controllers.examples.StarterGhosts;
 import pacman.controllers.examples.StarterPacMan;
-import pacman.entries.jmelPacMan.BTPacMan.PacManContext;
-import pacman.entries.jmelPacMan.controllers.PacManBTController;
-import pacman.entries.jmelPacMan.controllers.PacManMCTSController;
-import pacman.entries.jmelPacMan.controllers.PacManNNController;
-import pacman.entries.jmelPacMan.dataRecording.DataCollectorController;
+import pacman.entries.jmelPacMan.controllers.*;
 import pacman.game.Game;
 import pacman.game.GameView;
 import static pacman.game.Constants.*;
@@ -52,27 +48,27 @@ public class Executor
 		
 		Controller<MOVE> pmc1 = new PacManMCTSController();
 		Controller<MOVE> pmc2 = new PacManBTController();
-		Controller<MOVE> pmc3 = new PacManBTController(new PacManContext(5,36,155));
+		Controller<MOVE> pmc3 = new PacManBTEAController();
 		Controller<MOVE> pmc4 = new PacManNNController();
 		Controller<MOVE> pmc5 = new HumanController(new KeyBoardInput());
 		
-		Controller<MOVE> controllerToTest = pmc4;
+		Controller<MOVE> controllerToTest = pmc3;
 		
 		//run multiple games in batch mode - good for testing.
 		int numTrials=1000;
 		exec.runExperiment(controllerToTest,new Legacy2TheReckoning(),numTrials);
-		System.out.println("------------------");
-		exec.runExperiment(controllerToTest,new StarterGhosts(),numTrials);
-		System.out.println("------------------");
-		exec.runExperiment(controllerToTest,new AggressiveGhosts(),numTrials);
-		System.out.println("------------------");
-		exec.runExperiment(controllerToTest,new RandomGhosts(),numTrials);
+//		System.out.println("------------------");
+//		exec.runExperiment(controllerToTest,new StarterGhosts(),numTrials);
+//		System.out.println("------------------");
+//		exec.runExperiment(controllerToTest,new AggressiveGhosts(),numTrials);
+//		System.out.println("------------------");
+//		exec.runExperiment(controllerToTest,new RandomGhosts(),numTrials);
 		
 		//run a game in synchronous mode: game waits until controllers respond.
 //		int delay=10;
 //		boolean visual=true;
 //		exec.runGame(controllerToTest,new AggressiveGhosts(),visual,delay);
-  		
+//  		
 		
 		///*
 		//run the game in asynchronous mode.
@@ -107,7 +103,7 @@ public class Executor
      * @param ghostController The Ghosts controller
      * @param trials The number of trials to be executed
      */
-    public double runExperiment(Controller<MOVE> pacManController,Controller<EnumMap<GHOST,MOVE>> ghostController,int trials)
+    public void runExperiment(Controller<MOVE> pacManController,Controller<EnumMap<GHOST,MOVE>> ghostController,int trials)
     {
     	double avgScore=0;
     	
@@ -129,9 +125,8 @@ public class Executor
 //			System.out.println(i+"\t"+game.getScore());
 		}
 		
-//		System.out.println(avgScore/trials);
+		System.out.println(avgScore/trials);
 //		System.out.println(avgScore + " & " + trials + " & " + avgScore/trials);
-		return avgScore/trials;
     }
 	
 	/**
