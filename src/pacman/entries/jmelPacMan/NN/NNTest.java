@@ -2,7 +2,7 @@ package pacman.entries.jmelPacMan.NN;
 
 import pacman.entries.jmelPacMan.NN.Training.TrainingData;
 import pacman.entries.jmelPacMan.NN.Training.TrainingSet;
-import pacman.entries.jmelPacMan.NNPacMan.NNPacMan;
+import pacman.entries.jmelPacMan.controllers.PacManNNController;
 
 /**
  * Class for testing neural networks. 
@@ -24,7 +24,7 @@ public class NNTest
 	public static void main(String[] args)
 	{
 //		pacManNetwork();
-		AND();
+//		AND();
 //		XOR();
 	}
 
@@ -34,7 +34,7 @@ public class NNTest
 	@SuppressWarnings("unused")
 	private static void pacManNetwork()
 	{
-		NNPacMan.newController(5);
+		PacManNNController.newController(5);
 	}
 
 	/**

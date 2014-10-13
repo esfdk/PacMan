@@ -1,4 +1,4 @@
-package pacman.entries.jmelPacMan.NNPacMan;
+package pacman.entries.jmelPacMan.controllers;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -8,6 +8,7 @@ import pacman.controllers.Controller;
 import pacman.entries.jmelPacMan.NN.Backpropagator;
 import pacman.entries.jmelPacMan.NN.NeuralNetwork;
 import pacman.entries.jmelPacMan.NN.Training.TrainingSet;
+import pacman.entries.jmelPacMan.NNPacMan.PacManTrainingData;
 import pacman.entries.jmelPacMan.dataRecording.DataSaverLoader;
 import pacman.entries.jmelPacMan.dataRecording.DataTuple;
 import pacman.game.Constants.MOVE;
@@ -19,7 +20,7 @@ import pacman.game.util.IO;
  * 
  * @author Jakob Melnyk (jmel)
  */
-public class NNPacMan extends Controller<MOVE>
+public class PacManNNController extends Controller<MOVE>
 {
 	/**
 	 * Controls if weights should be loaded when a controller is initialised.
@@ -29,7 +30,7 @@ public class NNPacMan extends Controller<MOVE>
 	/**
 	 * Controls if weights should be loaded from an array or from a file.
 	 */
-	private boolean loadArray = false;
+	private boolean loadArray = true;
 
 	/**
 	 * The file to load weights from.
@@ -59,7 +60,7 @@ public class NNPacMan extends Controller<MOVE>
 	/**
 	 * Instantiates a new PacManController using a NeuralNetwork.
 	 */
-	public NNPacMan()
+	public PacManNNController()
 	{
 		nn = NeuralNetwork.createSingleHiddenLayerNeuralNetwork(generateNeuralNetworkName(), numberOfInputs, numberOfOutputs,
 				numberOfHiddenNodes);
@@ -75,7 +76,7 @@ public class NNPacMan extends Controller<MOVE>
 	 * @param numberOfHiddenNodes
 	 *            The number of hidden nodes in the neural network used by the controller.
 	 */
-	private NNPacMan(int numberOfHiddenNodes)
+	private PacManNNController(int numberOfHiddenNodes)
 	{
 		this.numberOfHiddenNodes = numberOfHiddenNodes;
 
@@ -102,9 +103,9 @@ public class NNPacMan extends Controller<MOVE>
 	/**
 	 * Instantiates a new PacManController using a NeuralNetwork and trains it.
 	 */
-	public static NNPacMan newController()
+	public static PacManNNController newController()
 	{
-		NNPacMan controller = new NNPacMan();
+		PacManNNController controller = new PacManNNController();
 
 		controller.trainNetwork();
 
@@ -121,9 +122,9 @@ public class NNPacMan extends Controller<MOVE>
 	 * @param hiddenNodeNumber
 	 *            Number of hidden nodes in the network hidden layer of the network
 	 */
-	public static NNPacMan newController(int hiddenNodeNumber)
+	public static PacManNNController newController(int hiddenNodeNumber)
 	{
-		NNPacMan controller = new NNPacMan(hiddenNodeNumber);
+		PacManNNController controller = new PacManNNController(hiddenNodeNumber);
 
 		controller.trainNetwork();
 

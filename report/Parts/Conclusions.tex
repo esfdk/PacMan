@@ -1,2 +1,8 @@
 \section{Conclusions}
-The conclusion goes here.
+This paper presented three different PacMan controllers for the Ms. PacMan. Their performance was measured as the average score of 1000 trials in the game. The behaviour tree controller evolved using an evolutionary algorithm is the clear winner of the three with the highest average, maximum and minimum scores against all four ghost controllers. Compared to the evolved behaviour tree controller, the Monte Carlo Tree Search controller had a small relative standard deviation against all controllers except for the Random ghost controller. The neural network controller had abysmal performance with an average score of 120 against all controllers except the Random ghost controller.
+
+The performance of the behaviour tree with the structure suggested in this paper has likely peaked, but modifications to the structure of the tree can be made. Evolving a modified (and more complex) tree is likely to result in performance improvements.
+
+More experimentation with the parameters of the Monte Carlo Tree Search controller is likely to show improvement against all controllers; especially if the algorithm has knowledge of the Ghost controller while simulating. This paper suggests improvements for the algorithm, especially in terms of long term goals and end game tactics.
+
+Due to the terrible performance of the neural network controller, the necessary conclusion must be that the approach covered in this paper is unlikely to produce a high-level controller. While this does not exclude neural network controllers from playing PacMan, the neural network should be used in a different way; perhaps as a part of a different algorithm, or by having the inputs of the neural network use predicted/simulated data instead of only the current game state.

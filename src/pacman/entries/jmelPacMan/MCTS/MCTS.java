@@ -125,26 +125,21 @@ public class MCTS
 		root = new TreeNode(game.copy(), null, 0);
 		TreeNode currNode = root;
 
-		long timeSpent = 0;
 		currIteration = 0;
 
-		while (timeSpent < timeDue && currIteration < MAXIMUM_ITERATIONS)
+		while (System.currentTimeMillis() < timeDue && currIteration < MAXIMUM_ITERATIONS)
 		{
-			// Record current time.
-			long currentTime = System.currentTimeMillis();
-
 			// Selects the best child that is either a terminal node or a leaf node.
 			currNode = selection();
 
 			// Simulates play of PacMan until a terminal node is reached or PacMan dies.
-			TreeNode tempNode = playout(currNode);
+			TreeNode node = playout(currNode);
 
 			// Backpropagate pill and survival scores up the tree.
-			backpropagate(currNode, tempNode);
+			backpropagate(currNode, node);
 
 			// Count up iteration and time spent.
 			currIteration++;
-			timeSpent += System.currentTimeMillis() - currentTime;
 		}
 
 		// Select child with best score as node to return.
@@ -160,7 +155,7 @@ public class MCTS
 		}
 
 		// If average survival rate was lower than threshold, engage survival tactics.
-		if (chosenNode.avgSurvival < MCTS.SURVIVAL_THRESHOLD)
+		if (chosenNode.maxSurvival < MCTS.SURVIVAL_THRESHOLD)
 		{
 			SURVIVAL = true;
 		}
@@ -179,20 +174,20 @@ public class MCTS
 	 */
 	private TreeNode selection()
 	{
-		TreeNode tempNode = root;
-		while (!tempNode.isTerminalNode())
+		TreeNode node = root;
+		while (!node.isTerminalNode())
 		{
-			if (!tempNode.isLeafNode())
+			if (!node.isLeafNode())
 			{
-				tempNode = tempNode.bestChild();
+				node = node.bestChild();
 			}
 			else
 			{
-				return tempNode.expand();
+				return node.expand();
 			}
 		}
 
-		return tempNode;
+		return node;
 	}
 
 	/**

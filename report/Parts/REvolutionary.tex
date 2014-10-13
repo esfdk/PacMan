@@ -1,0 +1,28 @@
+\subsection{Behaviour Tree with Evolutionary Algorithm controller}
+\begin{table}[h]
+\caption{Behaviour Tree (EA) controller results}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\raisebox{-0.50ex}[0cm][0cm]{\!Ghost\!}}
+& \multicolumn{1}{|c|}{Average}
+& \multicolumn{1}{|c|}{Max}
+& \multicolumn{1}{|c|}{Min} 
+& \multicolumn{1}{|c|}{Standard}
+& \multicolumn{1}{|c|}{Relative}\\
+controller & score & score & score & deviation & std dev \\ \hline
+Legacy2 &  $10377.07$  &  $30840$  &  $2420$ & $5054.37$ & $48.71\%$\\ \hline
+Starter &  $10446.4$  &  $32180$  &  $2640$ & $5474.55$ & $52.41\%$\\ \hline
+Aggressive &  $24939.82$  &  $99400$  &  $3580$ & $15330.57$ & $61.47\%$\\ \hline
+Random &  $59324.13$  &  $98420$  &  $5450$ & $18644.56$ & $31.43\%$\\ \hline
+\end{tabular}
+\label{table-bteaResults}
+\end{center}
+\end{table}
+
+As shown in table \ref{table-bteaResults}, the relative standard deviation of the trials against the random ghosts is much lower than against the other three ghost controllers. This is similar to the results of the other behaviour tree controller (shown in table \ref{table-compResults}). Comparing the relative standard deviation of the results of the two controllers, it is the same against Starter and Aggressive ghosts, lower against Legacy2 ghosts and higher against Random ghosts. The average score of the evolved controller is higher against all ghost controllers, except against the standard ghosts. It is not surprising that performance has been improved against the Legacy2 ghosts, as the fitness of individuals in the evolutionary algorithm was determined using the Legacy2 controller. It is surprising that there is a setback against the Starter ghosts, even though the setback is small.
+
+\subsubsection{Suggested improvements}
+With the current structure of the behaviour tree itself, it is unlikely that it will perform much better than it currently does, due to the results from running the evolutionary algorithm. Any change to the structure of the behaviour tree, both in the addition of new behaviours or the removal of any current behaviours, is likely to completely change the performance of the controller. A more advanced tree will likely perform better, as it will be able to make more advanced decisions.
+
+Several improvements can be made to the evolutionary algorithm. The first priority should be to experiment with adding recombination as a variation operator. More experimentation with different population amounts, parents and new children parameters is also likely to produce better results, if only slightly. It is also likely that a different representation of the genotype would allow for more complex recombination and mutation methods. Adding age as a consideration when doing the survivor selection process could also help in getting out of a local optimum.

@@ -1,5 +1,21 @@
 \subsection{Monte Carlo Tree Search}
+The Monte Carlo Tree Search controller utilises a game tree, which is built by simulating play of both PacMan and the ghost controller. Whenever the game requests a move from the controller, the controller creates a new tree with the current position as the root. The tree is then built incrementally and asymmetrically over a number of iterations until the time limit is reached or another stopping condition comes into play. Each iteration of the tree consists of two parts: a \textit{selection} phase and a \textit{playout} phase\cite{pepels2012enhancements}. 
 
+During the \textit{selection} phase, a \textit{tree policy} is used to select the best child of each node until either a leaf node or a terminal node is found. The tree policy decides on the best child by balancing considerations of exploration (search nodes that have not been searched well) and exploitation (search areas that appear to be promising)\cite{browne2012survey}.
+
+The \textit{playout} phase is a simulation of play from the node selected by the \textit{tree policy}. The simulation is done by taking uniformly random moves in the tree until a terminal node is reached. Once the terminal node is reached, the state of the terminal node is evaluated and the evaluation value is propagated up the tree, updating the values of its ancestors\cite{browne2012survey}.
+
+Once the time limit or a stopping condition is reached, the search algorithm returns the best child of the root node, which contains the action that the controller should take.
 
 \subsubsection{Algorithm Parameters}
+As noted by \citet{pepels2012enhancements}, there are many variables that can be tweaked in the Monte Carlo Tree Search algorithm when it is used to play PacMan.
 
+Because Monte Carlo Tree Search simulates gameplay when searching the tree, assumptions regarding the movement of the opposition (the ghosts) must be made. If the ghost controller is known beforehand and is available, it is clearly best to use that controller, as it gives the best simulation and thus more accurate predictions. If the ghost controller is not known beforehand, it is likely best to simulate play by using the most strict ghost controller available; in this paper, the \textit{Legacy2TheReckoning} ghost controller was chosen for simulation.
+
+A node in the tree used to represent a game state can be either every positional index in the game or only at junctions. \citet{pepels2012enhancements} suggests using junctions as nodes in the tree / graph, which leads to a much smaller tree to search. The controller made for this paper uses both junctions and corners as nodes, as experimentation showed a much higher average score when doing so.
+
+Similar to the strategy described by \cite{pepels2012enhancements}, the Monte Carlo Tree Search controller in this paper does not allow for PacMan to turn back at junctions.
+
+In addition to the parameters above, five variable parameters can be changed; the survival threshold, the minimum node visit threshold, the maximum iterations, the maximum path to the root node and the exploration constant. The survival threshold and the visit threshold did not change during experimentation; the values used were from the paper by \citet{pepels2012enhancements}.
+
+The maximum amount of iterations chosen for the controller was \textbf{1000}. Due to the time limit the game poses on the controller, this limit was rarely reached. The exploration constant controls how likely exploration is; the higher the constant, the more nodes will be explored. Through experimentation, a constant of \textbf{0.5} was decided on. Experimentation showed that a low\footnote{Compared to the results found by \citet{pepels2012enhancements}.} maximum path to the root node performed better than a high maximum path length; the final chosen value was \textbf{10}.

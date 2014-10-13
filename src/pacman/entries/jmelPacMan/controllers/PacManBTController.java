@@ -1,7 +1,8 @@
-package pacman.entries.jmelPacMan.BTPacMan;
+package pacman.entries.jmelPacMan.controllers;
 
 import pacman.controllers.Controller;
 import pacman.entries.jmelPacMan.BT.*;
+import pacman.entries.jmelPacMan.BTPacMan.PacManContext;
 import pacman.entries.jmelPacMan.BTPacMan.PacManBehaviours.*;
 import pacman.game.Constants.MOVE;
 import pacman.game.Game;
@@ -10,7 +11,7 @@ import pacman.game.Game;
  * A PacMan Controller using a behaviour tree.
  * @author Jakob Melnyk (jmel)
  */
-public class PacManBT extends Controller<MOVE>
+public class PacManBTController extends Controller<MOVE>
 {
 	/**
 	 * The root behaviour of the behaviour tree. 
@@ -25,7 +26,7 @@ public class PacManBT extends Controller<MOVE>
 	/**
 	 * Instantiates a new instance of the jmelBTPacManController class.
 	 */
-	public PacManBT()
+	public PacManBTController()
 	{
 		this.context = new PacManContext();
 		createBehaviourTree();
@@ -35,7 +36,7 @@ public class PacManBT extends Controller<MOVE>
 	 * Instantiates a new instance of the jmelBTPacManController class.
 	 * @param pmc The PacManContext used for the controller.
 	 */
-	public PacManBT(PacManContext pmc)
+	public PacManBTController(PacManContext pmc)
 	{
 		this.context = pmc;
 		createBehaviourTree();
@@ -50,7 +51,7 @@ public class PacManBT extends Controller<MOVE>
 		
 		Selector ghostBehaviour = new Selector();
 		ghostBehaviour.addBehaviour(new Flee());
-		ghostBehaviour.addBehaviour(new EatGhost());
+//		ghostBehaviour.addBehaviour(new EatGhost());
 		
 		Sequence pillBehaviour = new Sequence();
 		pillBehaviour.addBehaviour(new FindPossibleTargets());

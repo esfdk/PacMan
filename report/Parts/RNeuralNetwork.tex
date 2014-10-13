@@ -1,0 +1,29 @@
+\subsection{Neural Network controller}
+\begin{table}[h]
+\caption{Neural Network controller results}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\raisebox{-0.50ex}[0cm][0cm]{\!Ghost\!}}
+& \multicolumn{1}{|c|}{Average}
+& \multicolumn{1}{|c|}{Max}
+& \multicolumn{1}{|c|}{Min} 
+& \multicolumn{1}{|c|}{Standard}
+& \multicolumn{1}{|c|}{Relative}\\
+controller & score & score & score & deviation & std dev\\ \hline
+Legacy2 &  $120.0$  &  $120$  &  $120$ & $0.0$ & 0\%\\ \hline
+Starter &  $120.0$  &  $120$  &  $120$ & $0.0$ & 0\%\\ \hline
+Aggressive &  $120.0$  &  $120$  &  $120$ & $0.0$ & 0\%\\ \hline
+Random &  $181.99$  &  $820$  &  $70$ & $83.512$ & 45.89\%\\ \hline
+\end{tabular}
+\label{table-nnResults}
+\end{center}
+\end{table}
+
+The performance of the neural network controller was abysmal. As shown by table \ref{table-nnResults}, no higher score than 70 was achieved. This is likely due to a problem with the neural network being incapable of classifying any of it's training (or test) tuples correctly. Due to the nature of the simple inputs, the network attempts to classify the current game state into an output. As noted in \ref{A-NN}, a variety of topologies consisting of different input combinations did little to change the performance of the controller. The reason the controller performs better against the Random ghosts is purely due to the stochastic nature of the ghost controller.
+
+The results of testing with the "AND" and "XOR" truth tables showed that both the neural network and backpropagation algorithms were fully functional, so the problem most certainly lies with either the way in which the neural network is used or the input given to the neural network. Worthy of note is also that each epoch of training the neural network takes much longer for a PacMan controller than for the "AND" and "XOR" truth tables.
+\subsubsection{Suggested improvements}
+Due to the lack of any prediction or simulation of future game states, the neural network is only capable of considering the current game state and as such is at a disadvantage compared to the other controllers presented in this paper. It is highly unlikely that any improvement can be made on the neural network using an approach that is similar to the one presented in this paper. 
+
+It is very likely, however, that significant improvements can be if the neural network is used to predict future game states or if simulations of the game state is used as inputs to the neural network. This was not experimented with, as the intention was to test how well a neural network could classify the simple inputs into move actions.

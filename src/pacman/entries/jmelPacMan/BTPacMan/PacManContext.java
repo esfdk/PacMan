@@ -69,9 +69,9 @@ public class PacManContext extends Context
 	{
 		nextMove = MOVE.NEUTRAL;
 		
-		MINIMUM_GHOST_DISTANCE = 5;
-		FLEE_SEARCH_RANGE = 45;
-		EAT_GHOST_DISTANCE = 74;
+		MINIMUM_GHOST_DISTANCE = 8;
+		FLEE_SEARCH_RANGE = 36;
+		EAT_GHOST_DISTANCE = 19;
 		
 		activePills = new int[0];
 		activePowerPills = new int[0];

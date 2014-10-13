@@ -23,9 +23,10 @@ import pacman.controllers.examples.RandomNonRevPacMan;
 import pacman.controllers.examples.RandomPacMan;
 import pacman.controllers.examples.StarterGhosts;
 import pacman.controllers.examples.StarterPacMan;
-import pacman.entries.jmelPacMan.BTPacMan.PacManBT;
-import pacman.entries.jmelPacMan.MCTSPacMan.MCTSPacMan;
-import pacman.entries.jmelPacMan.NNPacMan.NNPacMan;
+import pacman.entries.jmelPacMan.BTPacMan.PacManContext;
+import pacman.entries.jmelPacMan.controllers.PacManBTController;
+import pacman.entries.jmelPacMan.controllers.PacManMCTSController;
+import pacman.entries.jmelPacMan.controllers.PacManNNController;
 import pacman.entries.jmelPacMan.dataRecording.DataCollectorController;
 import pacman.game.Game;
 import pacman.game.GameView;
@@ -49,19 +50,28 @@ public class Executor
 	{
 		Executor exec=new Executor();
 		
-		Controller<MOVE> pmc1 = new MCTSPacMan();
-		Controller<MOVE> pmc2 = new PacManBT();
-		Controller<MOVE> pmc3 = new NNPacMan();
-		Controller<MOVE> pmc4 = new HumanController(new KeyBoardInput());
+		Controller<MOVE> pmc1 = new PacManMCTSController();
+		Controller<MOVE> pmc2 = new PacManBTController();
+		Controller<MOVE> pmc3 = new PacManBTController(new PacManContext(5,36,155));
+		Controller<MOVE> pmc4 = new PacManNNController();
+		Controller<MOVE> pmc5 = new HumanController(new KeyBoardInput());
+		
+		Controller<MOVE> controllerToTest = pmc4;
 		
 		//run multiple games in batch mode - good for testing.
-//		int numTrials=100;
-//		exec.runExperiment(pmc3,new StarterGhosts(),numTrials);
+		int numTrials=1000;
+		exec.runExperiment(controllerToTest,new Legacy2TheReckoning(),numTrials);
+		System.out.println("------------------");
+		exec.runExperiment(controllerToTest,new StarterGhosts(),numTrials);
+		System.out.println("------------------");
+		exec.runExperiment(controllerToTest,new AggressiveGhosts(),numTrials);
+		System.out.println("------------------");
+		exec.runExperiment(controllerToTest,new RandomGhosts(),numTrials);
 		
 		//run a game in synchronous mode: game waits until controllers respond.
-		int delay=10;
-		boolean visual=true;
-		exec.runGame(pmc3,new Legacy2TheReckoning(),visual,delay);
+//		int delay=10;
+//		boolean visual=true;
+//		exec.runGame(controllerToTest,new AggressiveGhosts(),visual,delay);
   		
 		
 		///*
@@ -115,11 +125,12 @@ public class Executor
 			}
 			
 			avgScore+=game.getScore();
-			System.out.println(i+"\t"+game.getScore());
+			System.out.println(game.getScore());
+//			System.out.println(i+"\t"+game.getScore());
 		}
 		
-		System.out.println(avgScore/trials);
-		System.out.println(avgScore + " & " + trials + " & " + avgScore/trials);
+//		System.out.println(avgScore/trials);
+//		System.out.println(avgScore + " & " + trials + " & " + avgScore/trials);
 		return avgScore/trials;
     }
 	

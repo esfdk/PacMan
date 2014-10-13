@@ -1,0 +1,28 @@
+\subsection{Monte Carlo Tree Search controller}
+\begin{table}[h]
+\caption{MCTS controller results}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\raisebox{-0.50ex}[0cm][0cm]{\!Ghost\!}}
+& \multicolumn{1}{|c|}{Average}
+& \multicolumn{1}{|c|}{Max}
+& \multicolumn{1}{|c|}{Min} 
+& \multicolumn{1}{|c|}{Standard}
+& \multicolumn{1}{|c|}{Relative}\\
+controller & score & score & score & deviation & std dev \\ \hline
+Legacy2 &  $6688.45$  &  $23450$  &  $1620$ & $2846.99$ & $42.57\%$\\ \hline
+Starter &  $3902.24$  &  $13100$  &  $1900$ & $1647.25$ & $42.21\%$\\ \hline
+Aggressive &  $7291.5$  &  $23530$  &  $1790$ & $3214.40$ & $44.08\%$\\ \hline
+Random &  $10938.02$  &  $28820$  &  $2400$ & $6103.35$ & $55.80\%$\\ \hline
+\end{tabular}
+\label{table-mctsResults}
+\end{center}
+\end{table}
+
+The scores of the Ms. PacMan controller presented in this paper is nowhere near the level other controllers\cite{pepels2012enhancements}, but it is also not nearly as advanced. Because the controller is simulated using the Legacy2 ghosts, it is not surprising that the controller performs better against Legacy2 ghosts than against the Starter ghosts. Due to the predictive nature of the simulations, it is not surprising that the relative standard deviation against the Random ghost controller is much higher than the other three ghost controllers.
+
+\subsubsection{Suggested improvements}
+A better evaluation of both long term goals and end game tactics, such as suggested by \citet{pepels2012enhancements}, would go a long way to improve the performance of the controller. Currently PacMan only evaluates the survival rate and pill score of the simulated playthroughs. However, if no pill is within range of PacMan, such as when there only a few pills left in the maze, the only goal of the controller is to stay alive. This can, in some cases, result in an endless dodging of ghosts. Checking if PacMan is boxed in by ghosts in addition to whether he was eaten in the last time step could lead to a more accurate prediction of the survival rate of a node.
+
+Additionally, more experimentation of the exploration and max path to root variables could be done in order to further increase the performance of the controller. This could done either manually or using an evolutionary algorithm. A better fitness function than running trials is likely required, however, as the trials take a long time to run for the controller.

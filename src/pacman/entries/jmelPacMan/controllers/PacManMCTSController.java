@@ -1,4 +1,4 @@
-package pacman.entries.jmelPacMan.MCTSPacMan;
+package pacman.entries.jmelPacMan.controllers;
 
 import pacman.controllers.Controller;
 import pacman.controllers.examples.Legacy2TheReckoning;
@@ -11,14 +11,14 @@ import pacman.game.Game;
  * A controller for Ms PacMan that utilises Monte Carlo Tree Search to make decisions.
  * @author Jakob Melnyk (jmel)
  */
-public class MCTSPacMan extends Controller<MOVE>
+public class PacManMCTSController extends Controller<MOVE>
 {
 	MCTS mcts;
 
 	/**
 	 * Instantiates a new instance of the MCTSPacMan class.
 	 */
-	public MCTSPacMan()
+	public PacManMCTSController()
 	{
 		mcts = new MCTS();
 	}

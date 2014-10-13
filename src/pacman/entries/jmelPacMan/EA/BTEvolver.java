@@ -1,14 +1,16 @@
 package pacman.entries.jmelPacMan.EA;
 
+import static pacman.game.Constants.DELAY;
+
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Random;
 
-import pacman.Executor;
 import pacman.controllers.Controller;
 import pacman.controllers.examples.StarterGhosts;
-import pacman.entries.jmelPacMan.BTPacMan.PacManBT;
 import pacman.entries.jmelPacMan.BTPacMan.PacManContext;
+import pacman.entries.jmelPacMan.controllers.PacManBTController;
+import pacman.game.Game;
 import pacman.game.Constants.GHOST;
 import pacman.game.Constants.MOVE;
 
@@ -19,11 +21,6 @@ import pacman.game.Constants.MOVE;
  */
 public class BTEvolver
 {
-	/**
-	 * The executor used to run the trials.
-	 */
-	private static Executor exec;
-
 	/**
 	 * The controller to run trials against.
 	 */
@@ -81,7 +78,6 @@ public class BTEvolver
 	 */
 	public BTEvolver(int popSize, int parents, int children, int generations, int trials)
 	{
-		exec = new Executor();
 		r = new Random();
 
 		population = new PMCGenotype[popSize];
@@ -260,7 +256,40 @@ public class BTEvolver
 	 */
 	private static double fitness(PMCGenotype gene, int trials)
 	{
-		Controller<MOVE> btc = new PacManBT(decode(gene));
-		return exec.runExperiment(btc, ghostController, trials);
+		Controller<MOVE> btc = new PacManBTController(decode(gene));
+		return runExperiment(btc, ghostController, trials);
 	}
+	
+	/**
+     * For running multiple games without visuals. This is useful to get a good idea of how well a controller plays
+     * against a chosen opponent: the random nature of the game means that performance can vary from game to game. 
+     * Running many games and looking at the average score (and standard deviation/error) helps to get a better
+     * idea of how well the controller is likely to do in the competition.
+     *
+     * @param pacManController The Pac-Man controller
+     * @param ghostController The Ghosts controller
+     * @param trials The number of trials to be executed
+     */
+    public static double runExperiment(Controller<MOVE> pacManController,Controller<EnumMap<GHOST,MOVE>> ghostController,int trials)
+    {
+    	double avgScore=0;
+    	
+    	Random rnd=new Random(0);
+		Game game;
+		
+		for(int i=0;i<trials;i++)
+		{
+			game=new Game(rnd.nextLong());
+			
+			while(!game.gameOver())
+			{
+		        game.advanceGame(pacManController.getMove(game.copy(),System.currentTimeMillis()+DELAY),
+		        		ghostController.getMove(game.copy(),System.currentTimeMillis()+DELAY));
+			}
+			
+			avgScore+=game.getScore();
+		}
+		
+		return avgScore/trials;
+    }
 }
